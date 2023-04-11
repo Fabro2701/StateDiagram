@@ -14,12 +14,15 @@ import java.util.function.Consumer;
 import javax.swing.JPanel;
 
 import state_diagram.elements.Element;
+import state_diagram.elements.InitState;
 import state_diagram.elements.SimpleState;
+import state_diagram.elements.Splitter;
 import state_diagram.elements.Transition;
+import state_diagram.elements.TransitionableElement;
 
 public class Diagram extends JPanel{
 	Point base;
-	List<Element>elems;
+	List<TransitionableElement>elems;
 	MouseAdapter mouse;
 	Consumer<Graphics2D>gaux;
 	public Diagram() {
@@ -32,12 +35,13 @@ public class Diagram extends JPanel{
 		this.addMouseWheelListener(mouse);
 		
 		this.elems.add(new SimpleState(base, new Point(200,300)));
-		this.elems.add(new SimpleState(base, new Point(400,300)));
+		this.elems.add(new Splitter(base, new Point(400,300)));
+		this.elems.add(new InitState(base, new Point(400,500)));
 	}
 
 	private class CustomMouse extends MouseAdapter{
-		Element currentElement = null;
-		Element shadowElement = null;
+		TransitionableElement currentElement = null;
+		TransitionableElement shadowElement = null;
 		Transition currentTransition = null;
 		Point currentPoint = null;
 		boolean pressed = false;
@@ -48,7 +52,7 @@ public class Diagram extends JPanel{
 	    	pressed = true;
 	    	currentPoint = p;
 	    	if(currentElement==null) {
-	    		for(Element e:elems) {
+	    		for(TransitionableElement e:elems) {
 		    		if(e.contains(p)) {
 		    			currentElement = e;
 		    		}
@@ -59,7 +63,7 @@ public class Diagram extends JPanel{
 	    public void mouseReleased(MouseEvent ev) {
 	    	Point p = ev.getPoint();
 	    	if(currentTransition!=null) {
-	    		for(Element e:elems) {
+	    		for(TransitionableElement e:elems) {
 		    		if(e.containsShadow(p)) {
 		    			currentTransition.setDest(e);
 		    			currentTransition.setToShift(e.getRelativePosition(p));
@@ -88,6 +92,13 @@ public class Diagram extends JPanel{
 	    			Point from = shadowElement.getOver();
 	    			gaux = g2->g2.drawLine(from.x, from.y, p.x, p.y);
 	    			//shadowElement=null;
+	    			for(TransitionableElement e:elems) {
+	    	    		if(e.containsShadow(p)) {
+	    	    			e.setOver(p);
+	    	    			repaint();
+	    	    			break;
+	    	    		}
+	    	    	}
 		    		repaint();
 	    		}
 	    		else if(currentElement==null && shadowElement==null) {
@@ -102,7 +113,7 @@ public class Diagram extends JPanel{
 		    		repaint();
 	    		}
 	    		else if(shadowElement!=null){
-	    			Transition t = new Transition(shadowElement, shadowElement.getRelativePosition(shadowElement.getOver()));
+	    			Transition t = new Transition(shadowElement, shadowElement.getRelativePosition(p));
 	    			currentTransition = t;
 	    			//currentPoint = p;
 		    		repaint();
@@ -110,15 +121,17 @@ public class Diagram extends JPanel{
 	    	}
 	    }
 	    public void mouseMoved(MouseEvent ev){
-	    	if(pressed)return;
-	    	boolean r = false;
 	    	Point p = ev.getPoint();
+	    	if(pressed) {
+	    		return;
+	    	}
+	    	boolean r = false;
 	    	if(shadowElement!=null) {
 	    		shadowElement.setOver(null);
 	    		shadowElement = null;
 	    		r = true;
 	    	}
-	    	for(Element e:elems) {
+	    	for(TransitionableElement e:elems) {
 	    		if(e.containsShadow(p)) {
 	    			e.setOver(p);
 	    			shadowElement = e;

@@ -8,17 +8,11 @@ import java.util.List;
 
 import state_diagram.Constants;
 
-public class SimpleState extends Element {
+public class SimpleState extends TransitionableElement {
 	static int shadowMargin = 10;
 	int w=100,h=100;
-	protected Point base,pos;
-	List<Transition>ts;
 	public SimpleState(Point base, Point pos) {
-		super();
-		this.base = base;
-		this.pos = pos;
-		this.ts = new ArrayList<>();
-		// TODO Auto-generated constructor stub
+		super(base, pos);
 	}
 	
 	@Override
@@ -44,12 +38,6 @@ public class SimpleState extends Element {
 	}
 
 	@Override
-	public void addTransition(Transition t) {
-		ts.add(t);
-
-	}
-
-	@Override
 	public boolean contains(Point p) {
 		return (p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x)&&
 			   (p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y);
@@ -60,15 +48,6 @@ public class SimpleState extends Element {
 		if(contains(p))return false;
 		return (p.x>=base.x+pos.x-w-shadowMargin&&p.x<=base.x+pos.x+shadowMargin)&&
 			   (p.y>=base.y+pos.y-h-shadowMargin&&p.y<=base.y+pos.y+shadowMargin);
-	}
-	@Override
-	public void move(int x, int y) {
-		pos.x += x;
-		pos.y += y;
-	}
-	@Override
-	public Point getRelativePosition(Point p) {
-		return new Point(p.x-(this.base.x + this.pos.x), p.y-(this.base.y + this.pos.y));
 	}
 
 

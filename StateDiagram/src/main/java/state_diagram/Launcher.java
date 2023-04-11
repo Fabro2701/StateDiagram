@@ -14,10 +14,10 @@ public class Launcher extends JFrame{
 			launcher.setContentPane(panel);
 			
 			Diagram diagram = new Diagram();
-			diagram.setPreferredSize(new Dimension(500,500));
+			diagram.setPreferredSize(new Dimension(800,700));
 			panel.add(diagram);
 			
-			launcher.setLocationRelativeTo(null);
+			launcher.setLocation(500, 100);
 			launcher.pack();
 			launcher.setDefaultCloseOperation(EXIT_ON_CLOSE);
 			launcher.setVisible(true);
