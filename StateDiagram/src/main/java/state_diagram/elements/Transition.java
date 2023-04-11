@@ -1,8 +1,11 @@
 package state_diagram.elements;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+
+import state_diagram.Constants;
 
 public class Transition extends Element{
 	TransitionableElement from,to;
@@ -24,9 +27,13 @@ public class Transition extends Element{
 								fromShift.y + from.base.y + from.pos.y);
 		Point top = new Point(toShift.x + to.base.x + to.pos.x,
 							  toShift.y + to.base.y + to.pos.y);
-
-		g2.drawLine(fromp.x, fromp.y, top.x, top.y);
 		
+		
+
+		//g2.drawLine(fromp.x, fromp.y, top.x, top.y);
+		
+		Point d = new Point(top.x-fromp.x, top.y-fromp.y);
+		drawLineWithArrow(g2, fromp.x, fromp.y, top.x, top.y,Constants.ARROW_W,Constants.ARROW_H);
 	}
 	public void validate() {
 		from.addTransition(this);
@@ -41,6 +48,27 @@ public class Transition extends Element{
 	}
 	public void setToShift(Point toShift) {
 		this.toShift = toShift;
+	}
+	private void drawLineWithArrow(//
+									Graphics2D g2, //
+									int x1, int y1, //
+									int x2, int y2, //
+									int w, int h) {
+
+		int dx = x2 - x1, dy = y2 - y1;
+		double D = Math.sqrt(dx * dx + dy * dy);
+		double xm = D - w, xn = xm, ym = h, yn = -h, x;
+		double sin = dy / D, cos = dx / D;
+		x = xm * cos - ym * sin + x1;
+		ym = xm * sin + ym * cos + y1;
+		xm = x;
+		x = xn * cos - yn * sin + x1;
+		yn = xn * sin + yn * cos + y1;
+		xn = x;
+		int[] xpoints = { x2, (int) xm, (int) xn };
+		int[] ypoints = { y2, (int) ym, (int) yn };
+		g2.drawLine(x1, y1, x2, y2);
+		g2.fillPolygon(xpoints, ypoints, 3);
 	}
 
 }

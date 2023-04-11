@@ -15,6 +15,11 @@ public abstract class TransitionableElement extends Element{
 		this.over = null;
 		this.ts = new ArrayList<>();
 	}
+	public void paint(Graphics2D g2) {
+		if(this.over!=null) {
+			this.paintShadow(g2);
+		}
+	}
 	protected abstract void paintShadow(Graphics2D g2);
 	public abstract boolean containsShadow(Point p);
 	public Point getOver() {

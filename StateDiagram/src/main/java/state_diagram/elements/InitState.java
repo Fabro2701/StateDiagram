@@ -9,24 +9,20 @@ import java.util.List;
 import state_diagram.Constants;
 
 public class InitState extends TransitionableElement {
-	static int shadowMargin = 30;
-	int w=100,h=100;
+	static int shadowMargin = Constants.SHADOW_MARGIN;
+	static int w=Constants.INIT_STATE_W,h=Constants.INIT_STATE_H;
 	public InitState(Point base, Point pos) {
 		super(base, pos);
 	}
 	
 	@Override
 	public void paint(Graphics2D g2) {
-		if(this.over!=null) {
-			this.paintShadow(g2);
-		}
-		g2.setColor(Color.white);
+		super.paint(g2);
+		g2.setColor(Color.black);
 		g2.fillOval(base.x+pos.x-w, base.y+pos.y-h, w, h);
-		g2.setColor(Constants.SIMPLE_STATE_COLOR);
-		g2.drawOval(base.x+pos.x-w, base.y+pos.y-h, w, h);
-		for(var t:ts) {
-			t.paint(g2);
-		}
+		/*g2.setColor(Constants.SIMPLE_STATE_COLOR);
+		g2.drawOval(base.x+pos.x-w, base.y+pos.y-h, w, h);*/
+		
 	}
 
 	@Override

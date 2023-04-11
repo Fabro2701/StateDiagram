@@ -1,9 +1,11 @@
 package state_diagram;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -23,11 +25,13 @@ import state_diagram.elements.TransitionableElement;
 public class Diagram extends JPanel{
 	Point base;
 	List<TransitionableElement>elems;
+	List<Transition>ts;
 	MouseAdapter mouse;
 	Consumer<Graphics2D>gaux;
 	public Diagram() {
 		this.base = new Point(0,0);
 		this.elems = new ArrayList<>();
+		this.ts = new ArrayList<>();
 		
 		this.mouse = new CustomMouse();
 		this.addMouseListener(mouse);
@@ -68,6 +72,7 @@ public class Diagram extends JPanel{
 		    			currentTransition.setDest(e);
 		    			currentTransition.setToShift(e.getRelativePosition(p));
 		    			currentTransition.validate();
+		    			ts.add(currentTransition);
 		    			break;
 		    		}
 		    	}
@@ -142,6 +147,7 @@ public class Diagram extends JPanel{
 	    	if(r)repaint();
 	    }
 	}
+	static Stroke stroke = new BasicStroke(2);
 	@Override
 	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
@@ -149,6 +155,10 @@ public class Diagram extends JPanel{
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		for(Element e:elems)e.paint(g2);
+		g2.setStroke(stroke);
+		for(var t:ts) {
+			t.paint(g2);
+		}
 		
 		if(gaux!=null)gaux.accept(g2);
 	}
