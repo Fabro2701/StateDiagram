@@ -11,9 +11,11 @@ import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONObject;
+
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
@@ -185,6 +187,24 @@ public class CompoundState extends TransitionableElement {
 
 	public List<TransitionableElement> getChildren() {
 		return children;
+	}
+	@Override
+	protected void print(StringBuilder buffer, String prefix, String childrenPrefix) {
+        buffer.append(prefix);
+        buffer.append(this.id());
+        buffer.append('\n');
+        for (Iterator<TransitionableElement> it = children.iterator(); it.hasNext();) {
+        	TransitionableElement next = it.next();
+            if (it.hasNext()) {
+                next.print(buffer, childrenPrefix + "├── ", childrenPrefix + "│   ");
+            } else {
+                next.print(buffer, childrenPrefix + "└── ", childrenPrefix + "    ");
+            }
+        }
+    }
+	@Override
+    public String id() {
+		return this.getClass().getSimpleName();
 	}
 
 }

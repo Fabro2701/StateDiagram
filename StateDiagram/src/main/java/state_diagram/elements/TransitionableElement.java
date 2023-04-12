@@ -3,6 +3,7 @@ package state_diagram.elements;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -48,6 +49,21 @@ public abstract class TransitionableElement extends Element{
 	public Point getOver() {
 		return over;
 	}
+	public String id() {
+		return this.getClass().getSimpleName();
+	}
+	@Override
+	public String toString() {
+        StringBuilder buffer = new StringBuilder(50);
+        print(buffer, "", "");
+        return buffer.toString();
+    }
+
+    protected void print(StringBuilder buffer, String prefix, String childrenPrefix) {
+        buffer.append(prefix);
+        buffer.append(this.id());
+        buffer.append('\n');
+    }
 	public void setOver(Point over) {
 		this.over = over;
 	}

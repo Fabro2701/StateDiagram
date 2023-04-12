@@ -49,7 +49,7 @@ public class ToolBar extends JPanel{
 		this.elems.add(new SimpleState(null, base, new Point(80,(70+Constants.SIMPLE_STATE_H)/2)));
 		this.elems.add(new Splitter(null, base, new Point(140,(70+Constants.SPLITTER_H)/2)));
 		this.elems.add(new Corner(null, base, new Point(170,(70+Constants.CORNER_H)/2)));
-		this.elems.add(new CompoundState(null, base, new Point(270,(70+Constants.COMPOUND_STATE_H)/2)));
+		this.elems.add(new CompoundState(null, base, new Point(290,(70+Constants.COMPOUND_STATE_H)/2)));
 	}
 
 	private class CustomMouse extends MouseAdapter{

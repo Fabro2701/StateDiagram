@@ -2,6 +2,7 @@ package state_diagram;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -9,6 +10,7 @@ import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.awt.geom.Rectangle2D;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -292,6 +294,20 @@ public class Diagram extends JPanel{
 		}
 		
 		if(gaux!=null)gaux.accept(g2);
+		
+		StringBuilder sb = new StringBuilder();
+		for(var e:elems) sb.append(e.toString());
+		String tree = sb.toString();
+		
+		float h=0;
+		g2.setColor(Color.gray);
+		g2.setFont(new Font("Monospaced", Font.PLAIN, 15));
+		for(String line:tree.split("\n")) {
+			Rectangle2D r = g2.getFontMetrics().getStringBounds(line, g2);
+			h += r.getHeight();
+			g2.drawString(line, 0f, h);
+		}
+		System.out.println(tree);
 	}
 	public void insertElement(TransitionableElement e, int x) {
 		e.setBase(base);
@@ -362,6 +378,8 @@ public class Diagram extends JPanel{
 			}
 		}
 		repaint();
+		
+		
 	}
 	public Point getBase() {
 		return base;

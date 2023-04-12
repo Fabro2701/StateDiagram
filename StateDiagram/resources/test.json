@@ -17,12 +17,12 @@
             "type": "Corner"
         },
         {
-            "exH": 117,
+            "exH": 243,
             "pos": {
-                "x": 209,
-                "y": 420
+                "x": 408,
+                "y": 123
             },
-            "exW": 59,
+            "exW": 154,
             "ID": 4,
             "id": "compid",
             "type": "CompoundState"
@@ -30,8 +30,8 @@
         {
             "exH": 36,
             "pos": {
-                "x": 241,
-                "y": 469
+                "x": 440,
+                "y": 172
             },
             "exW": 16,
             "fatherID": 4,
@@ -41,8 +41,8 @@
         },
         {
             "pos": {
-                "x": 188,
-                "y": 481
+                "x": 387,
+                "y": 184
             },
             "fatherID": 9,
             "ID": 0,
@@ -51,12 +51,52 @@
         },
         {
             "pos": {
-                "x": 247,
-                "y": 448
+                "x": 446,
+                "y": 151
             },
             "fatherID": 9,
             "ID": 1,
             "type": "Splitter"
+        },
+        {
+            "pos": {
+                "x": 403,
+                "y": 253
+            },
+            "fatherID": 4,
+            "ID": 5,
+            "type": "InitState"
+        },
+        {
+            "pos": {
+                "x": 494,
+                "y": 132
+            },
+            "fatherID": 4,
+            "ID": 7,
+            "type": "Splitter"
+        },
+        {
+            "exH": 0,
+            "pos": {
+                "x": 536,
+                "y": 320
+            },
+            "exW": 0,
+            "fatherID": 4,
+            "ID": 9,
+            "id": "compid",
+            "type": "CompoundState"
+        },
+        {
+            "pos": {
+                "x": 491,
+                "y": 313
+            },
+            "fatherID": 9,
+            "ID": 6,
+            "id": "id",
+            "type": "SimpleState"
         },
         {
             "toID": 0,
