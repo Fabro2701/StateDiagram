@@ -12,13 +12,18 @@ import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public class Splitter extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
 	int w=Constants.SPLITTER_W,h=Constants.SPLITTER_H;
 	static Stroke stroke = new BasicStroke(3);
+	
 	public Splitter(Diagram diagram, Point base, Point pos) {
 		super(diagram, base, pos);
+	}
+	public Splitter(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram, ob, es);
 	}
 	
 	@Override
@@ -73,8 +78,12 @@ public class Splitter extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new JSONObject().put("type", "Splitter")
+								   .put("ID", ID)
+								   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
+								   .put("fatherID", father!=null?father.ID:null);
+		
 	}
 
 

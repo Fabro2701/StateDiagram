@@ -10,6 +10,7 @@ import java.awt.Stroke;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Rectangle2D;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -22,6 +23,7 @@ import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public class SimpleState extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
@@ -37,6 +39,13 @@ public class SimpleState extends TransitionableElement {
 		this.pm.add(mEdit);
 		
 		updateId("id");
+	}
+	public SimpleState(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram, ob, es);
+		updateId(ob.getString("id"));
+		JMenuItem mEdit = new JMenuItem("Edit");
+		mEdit.addActionListener(ae->edit());
+		this.pm.add(mEdit);
 	}
 	public void edit() {
 		JDialog dialog = new JDialog();
@@ -131,8 +140,9 @@ public class SimpleState extends TransitionableElement {
 	public JSONObject toJSON() {
 		return new JSONObject().put("type", "SimpleState")
 							   .put("ID", ID)
+							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
 							   .put("id", id)
-							   .put("father", father);
+							   .put("fatherID", father!=null?father.ID:null);
 	}
 
 

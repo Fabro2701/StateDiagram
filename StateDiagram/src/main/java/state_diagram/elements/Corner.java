@@ -12,12 +12,16 @@ import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public class Corner extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
 	int w=Constants.CORNER_W,h=Constants.CORNER_H;
 	public Corner(Diagram diagram, Point base, Point pos) {
 		super(diagram, base, pos);
+	}
+	public Corner(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram, ob, es);
 	}
 	
 	@Override
@@ -54,8 +58,10 @@ public class Corner extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JSONObject().put("type", "Corner")
+							   .put("ID", ID)
+							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
+							   .put("fatherID", father!=null?father.ID:null);
 	}
 
 

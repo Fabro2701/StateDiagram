@@ -5,7 +5,10 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public abstract class TransitionableElement extends Element{
 	protected Point over;
@@ -17,6 +20,20 @@ public abstract class TransitionableElement extends Element{
 		super(diagram);
 		this.base = base;
 		this.pos = pos;
+		this.over = null;
+		this.fromTs = new ArrayList<>();
+		this.toTs = new ArrayList<>();
+	}
+	public TransitionableElement(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram,false);
+		this.ID = ob.getInt("ID");
+		IdGenerator.update(ID);
+		this.base = diagram.getBase();
+		this.pos = Util.pointFromJSON(ob.getJSONObject("pos"));
+		if(ob.has("fatherID")) {
+			CompoundState f = (CompoundState) es.stream().filter(e->e instanceof CompoundState && ((CompoundState)e).ID==ob.getInt("fatherID")).findFirst().get();
+			f.insertChild(this);
+		}
 		this.over = null;
 		this.fromTs = new ArrayList<>();
 		this.toTs = new ArrayList<>();

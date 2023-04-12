@@ -1,0 +1,122 @@
+{
+    "elems": [
+        {
+            "pos": {
+                "x": 400,
+                "y": 500
+            },
+            "ID": 2,
+            "type": "InitState"
+        },
+        {
+            "pos": {
+                "x": 100,
+                "y": 100
+            },
+            "ID": 3,
+            "type": "Corner"
+        },
+        {
+            "exH": 117,
+            "pos": {
+                "x": 209,
+                "y": 420
+            },
+            "exW": 59,
+            "ID": 4,
+            "id": "compid",
+            "type": "CompoundState"
+        },
+        {
+            "exH": 36,
+            "pos": {
+                "x": 241,
+                "y": 469
+            },
+            "exW": 16,
+            "fatherID": 4,
+            "ID": 9,
+            "id": "compid",
+            "type": "CompoundState"
+        },
+        {
+            "pos": {
+                "x": 188,
+                "y": 481
+            },
+            "fatherID": 9,
+            "ID": 0,
+            "id": "id",
+            "type": "SimpleState"
+        },
+        {
+            "pos": {
+                "x": 247,
+                "y": 448
+            },
+            "fatherID": 9,
+            "ID": 1,
+            "type": "Splitter"
+        },
+        {
+            "toID": 0,
+            "fromShift": {
+                "x": -20,
+                "y": -15
+            },
+            "toShift": {
+                "x": 17,
+                "y": -24
+            },
+            "ID": 0,
+            "type": "Transition",
+            "fromID": 2
+        },
+        {
+            "toID": 0,
+            "fromShift": {
+                "x": -15,
+                "y": -20
+            },
+            "toShift": {
+                "x": 4,
+                "y": 3
+            },
+            "ID": 0,
+            "type": "Transition",
+            "fromID": 1
+        },
+        {
+            "toID": 3,
+            "fromShift": {
+                "x": -24,
+                "y": -19
+            },
+            "toShift": {
+                "x": 2,
+                "y": -1
+            },
+            "ID": 0,
+            "type": "Transition",
+            "fromID": 0
+        },
+        {
+            "toID": 2,
+            "fromShift": {
+                "x": -6,
+                "y": 5
+            },
+            "toShift": {
+                "x": -22,
+                "y": -12
+            },
+            "ID": 0,
+            "type": "Transition",
+            "fromID": 3
+        }
+    ],
+    "base": {
+        "x": 0,
+        "y": 0
+    }
+}

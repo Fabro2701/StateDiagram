@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public class CompoundState extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
@@ -32,6 +33,13 @@ public class CompoundState extends TransitionableElement {
 		super(diagram, base, pos);
 		this.children = new ArrayList<>();
 		updateId("compid");
+	}
+	public CompoundState(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram, ob, es);
+		this.children = new ArrayList<>();
+		updateId(ob.getString("id"));
+		exW = ob.getInt("exW");
+		exH = ob.getInt("exH");
 	}
 	
 	public void insertChild(TransitionableElement e) {
@@ -58,7 +66,7 @@ public class CompoundState extends TransitionableElement {
 		g2.drawString(id, base.x+pos.x-w+(w-idW)/2, base.y+pos.y-h+idH);
 		
 		g2.setColor(Color.gray);
-		g2.drawString(String.valueOf(ID), base.x+pos.x-w, base.y+pos.y-h);
+		g2.drawString((father!=null?father.ID+"-":"")+String.valueOf(ID), base.x+pos.x-w, base.y+pos.y-h);
 		
 		for(var e:children)e.paint(g2);
 	}
@@ -165,9 +173,18 @@ public class CompoundState extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		return new JSONObject().put("type", "SimpleState")
+		return new JSONObject().put("type", "CompoundState")
 				   			   .put("ID", ID)
-				   			   .put("id", id);
+				   			   .put("id", id)
+							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
+							   .put("fatherID", father!=null?father.ID:null)
+							   .put("exW", exW)
+							   .put("exH", exH);
+
+	}
+
+	public List<TransitionableElement> getChildren() {
+		return children;
 	}
 
 }

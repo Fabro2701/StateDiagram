@@ -3,6 +3,7 @@ package state_diagram.elements;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.List;
 
 import javax.swing.JMenuItem;
 
@@ -10,12 +11,17 @@ import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public class InitState extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
 	static int w=Constants.INIT_STATE_W,h=Constants.INIT_STATE_H;
+	
 	public InitState(Diagram diagram, Point base, Point pos) {
 		super(diagram, base, pos);
+	}
+	public InitState(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram, ob, es);
 	}
 	
 	@Override
@@ -64,8 +70,10 @@ public class InitState extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JSONObject().put("type", "InitState")
+							   .put("ID", ID)
+							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
+							   .put("fatherID", father!=null?father.ID:null);
 	}
 
 

@@ -5,4 +5,7 @@ public class IdGenerator {
 	public static int nextId() {
 		return current++;
 	}
+	public static void update(int id) {
+		current = Math.max(current, id+1);
+	}
 }

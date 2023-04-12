@@ -3,11 +3,15 @@ package state_diagram.elements;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.List;
+
+import javax.swing.JMenuItem;
 
 import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
+import state_diagram.Util;
 
 public class Transition extends Element{
 	TransitionableElement from,to;
@@ -20,6 +24,13 @@ public class Transition extends Element{
 	}
 	public Transition(Diagram diagram, TransitionableElement father, Point shift) {
 		this(diagram, father, shift, null);
+	}
+	public Transition(Diagram diagram, JSONObject ob, List<Element> es) {
+		super(diagram, false);
+		this.from = (TransitionableElement) es.stream().filter(e->e instanceof TransitionableElement && ((TransitionableElement)e).ID==ob.getInt("fromID")).findFirst().get();
+		this.to = (TransitionableElement) es.stream().filter(e->e instanceof TransitionableElement && ((TransitionableElement)e).ID==ob.getInt("toID")).findFirst().get();
+		this.fromShift = Util.pointFromJSON(ob.getJSONObject("fromShift"));
+		this.toShift = Util.pointFromJSON(ob.getJSONObject("toShift"));
 	}
 
 	@Override
@@ -81,8 +92,12 @@ public class Transition extends Element{
 	}
 	@Override
 	public JSONObject toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		return new JSONObject().put("type", "Transition")
+							   .put("ID", ID)
+							   .put("fromID", from!=null?from.ID:null)
+							   .put("toID", to!=null?to.ID:null)
+							   .put("fromShift", new JSONObject().put("x", fromShift.x).put("y", fromShift.y))
+							   .put("toShift", new JSONObject().put("x", toShift.x).put("y", toShift.y));
 	}
 
 }

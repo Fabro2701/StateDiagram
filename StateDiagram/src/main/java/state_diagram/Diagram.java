@@ -9,12 +9,22 @@ import java.awt.Stroke;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import state_diagram.elements.CompoundState;
 import state_diagram.elements.CompoundState.RESIZE_DIR;
@@ -289,4 +299,72 @@ public class Diagram extends JPanel{
 		this.elems.add(e);
 		((CustomMouse)mouse).currentElement = e;
 	}
+	public void save() {
+		JSONObject ob = new JSONObject();
+		ob.put("base", new JSONObject().put("x", base.x).put("y", base.y));
+		JSONArray arr = new JSONArray();
+		for(var e:elems) {
+			arr.put(e.toJSON());
+			if(e instanceof CompoundState) {
+				arr.putAll(extractElems((CompoundState) e));
+			}
+		}
+		for(var e:ts) {
+			arr.put(e.toJSON());
+		}
+		ob.put("elems", arr);
+		try {
+			FileWriter file = new FileWriter("resources/test.json");
+			file.write(ob.toString(4));
+			file.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	private JSONArray extractElems(CompoundState cse) {
+		JSONArray arr = new JSONArray();
+		for(var e:cse.getChildren()) {
+			arr.put(e.toJSON());
+			if(e instanceof CompoundState) {
+				arr.putAll(extractElems((CompoundState) e));
+			}
+		}
+		return arr;
+	}
+	public void load() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+		this.ts.clear();
+		this.elems.clear();
+		JSONObject ob = null;
+		try {
+			ob = new JSONObject(new JSONTokener(new FileInputStream("resources/test.json")));
+		} catch (JSONException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.base = Util.pointFromJSON(ob.getJSONObject("base"));
+		JSONArray arr = ob.getJSONArray("elems");
+		
+		List<Element>tmpElements = new ArrayList<>();
+		for(int i=0;i<arr.length();i++) {
+			JSONObject o = arr.getJSONObject(i);
+			String type = o.getString("type");
+			
+			Element e = (Element) Class.forName("state_diagram.elements."+type).getConstructor(Diagram.class,JSONObject.class,List.class).newInstance(this,o,tmpElements);
+			tmpElements.add(e);
+			if(e instanceof Transition) {
+				this.ts.add((Transition) e);
+			}
+			else {
+				if(((TransitionableElement) e).getFather()==null) {
+					this.elems.add((TransitionableElement) e);
+				}
+				
+			}
+		}
+		repaint();
+	}
+	public Point getBase() {
+		return base;
+	}
+	
 }
