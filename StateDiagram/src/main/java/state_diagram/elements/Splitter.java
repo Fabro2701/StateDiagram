@@ -9,13 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import state_diagram.Constants;
+import state_diagram.Diagram;
 
 public class Splitter extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
 	int w=Constants.SPLITTER_W,h=Constants.SPLITTER_H;
-	static Stroke stroke = new BasicStroke(4);
-	public Splitter(Point base, Point pos) {
-		super(base, pos);
+	static Stroke stroke = new BasicStroke(3);
+	public Splitter(Diagram diagram, Point base, Point pos) {
+		super(diagram, base, pos);
 	}
 	
 	@Override
@@ -24,7 +25,7 @@ public class Splitter extends TransitionableElement {
 		g2.setColor(Color.white);
 		g2.fillPolygon(new int[] {base.x+pos.x-w/2, base.x+pos.x, base.x+pos.x-w/2, base.x+pos.x-w}, 
 				       new int[] {base.y+pos.y-h, base.y+pos.y-h/2, base.y+pos.y, base.y+pos.y-h/2}, 4);
-		g2.setColor(Constants.SIMPLE_STATE_COLOR);
+		g2.setColor(Constants.SPLITTER_COLOR);
 		g2.setStroke(stroke);
 		g2.drawPolygon(new int[] {base.x+pos.x-w/2, base.x+pos.x, base.x+pos.x-w/2, base.x+pos.x-w}, 
 					   new int[] {base.y+pos.y-h, base.y+pos.y-h/2, base.y+pos.y, base.y+pos.y-h/2}, 4);

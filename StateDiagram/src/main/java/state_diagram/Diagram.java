@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+import state_diagram.elements.Corner;
 import state_diagram.elements.Element;
 import state_diagram.elements.InitState;
 import state_diagram.elements.SimpleState;
@@ -38,9 +40,10 @@ public class Diagram extends JPanel{
 		this.addMouseMotionListener(mouse);
 		this.addMouseWheelListener(mouse);
 		
-		this.elems.add(new SimpleState(base, new Point(200,300)));
-		this.elems.add(new Splitter(base, new Point(400,300)));
-		this.elems.add(new InitState(base, new Point(400,500)));
+		this.elems.add(new SimpleState(this, base, new Point(200,300)));
+		this.elems.add(new Splitter(this, base, new Point(400,300)));
+		this.elems.add(new InitState(this, base, new Point(400,500)));
+		this.elems.add(new Corner(this, base, new Point(100,100)));
 	}
 
 	private class CustomMouse extends MouseAdapter{
@@ -50,7 +53,17 @@ public class Diagram extends JPanel{
 		Point currentPoint = null;
 		boolean pressed = false;
 		
-		public void mouseClicked(MouseEvent ev) {}
+		public void mouseClicked(MouseEvent ev) {
+	    	Point p = ev.getPoint();
+			if (SwingUtilities.isRightMouseButton(ev)) {
+				for(TransitionableElement e:elems) {
+		    		if(e.contains(p)) {
+		    			e.openMenu(p);
+		    			break;
+		    		}
+		    	}
+			}
+		}
 	    public void mousePressed(MouseEvent ev) {
 	    	Point p = ev.getPoint();
 	    	pressed = true;
@@ -59,6 +72,7 @@ public class Diagram extends JPanel{
 	    		for(TransitionableElement e:elems) {
 		    		if(e.contains(p)) {
 		    			currentElement = e;
+		    			break;
 		    		}
 		    	}
 	    	}
@@ -68,6 +82,7 @@ public class Diagram extends JPanel{
 	    	Point p = ev.getPoint();
 	    	if(currentTransition!=null) {
 	    		for(TransitionableElement e:elems) {
+	    			if(e==currentTransition.getFrom())continue;
 		    		if(e.containsShadow(p)) {
 		    			currentTransition.setDest(e);
 		    			currentTransition.setToShift(e.getRelativePosition(p));
@@ -118,7 +133,7 @@ public class Diagram extends JPanel{
 		    		repaint();
 	    		}
 	    		else if(shadowElement!=null){
-	    			Transition t = new Transition(shadowElement, shadowElement.getRelativePosition(p));
+	    			Transition t = new Transition(Diagram.this, shadowElement, shadowElement.getRelativePosition(p));
 	    			currentTransition = t;
 	    			//currentPoint = p;
 		    		repaint();
@@ -154,6 +169,7 @@ public class Diagram extends JPanel{
 		g2.setColor(Color.white);
 		g2.fillRect(0, 0, this.getWidth(), this.getHeight());
 
+		g2.setFont(Constants.TEXT_FONT);
 		for(Element e:elems)e.paint(g2);
 		g2.setStroke(stroke);
 		for(var t:ts) {

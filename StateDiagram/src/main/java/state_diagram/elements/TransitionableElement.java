@@ -5,15 +5,20 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
+import state_diagram.Diagram;
+
 public abstract class TransitionableElement extends Element{
 	protected Point over;
 	protected Point base,pos;
-	protected List<Transition>ts;
-	public TransitionableElement(Point base, Point pos) {
+	protected List<Transition>fromTs;
+	protected List<Transition>toTs;
+	public TransitionableElement(Diagram diagram, Point base, Point pos) {
+		super(diagram);
 		this.base = base;
 		this.pos = pos;
 		this.over = null;
-		this.ts = new ArrayList<>();
+		this.fromTs = new ArrayList<>();
+		this.toTs = new ArrayList<>();
 	}
 	public void paint(Graphics2D g2) {
 		if(this.over!=null) {
@@ -32,9 +37,11 @@ public abstract class TransitionableElement extends Element{
 		pos.x += x;
 		pos.y += y;
 	}
-	public void addTransition(Transition t) {
-		ts.add(t);
-
+	public void addFromTransition(Transition t) {
+		fromTs.add(t);
+	}
+	public void addToTransition(Transition t) {
+		toTs.add(t);
 	}
 	public Point getRelativePosition(Point p) {
 		return new Point(p.x-(this.base.x + this.pos.x), p.y-(this.base.y + this.pos.y));

@@ -1,23 +1,23 @@
 package state_diagram.elements;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
 import state_diagram.Constants;
+import state_diagram.Diagram;
 
 public class Transition extends Element{
 	TransitionableElement from,to;
 	Point fromShift,toShift;
-	public Transition(TransitionableElement from, Point fromShift, TransitionableElement to) {
-		super();
+	public Transition(Diagram diagram, TransitionableElement from, Point fromShift, TransitionableElement to) {
+		super(diagram);
 		this.from = from;
 		this.fromShift = fromShift;
 		this.to = to;
 	}
-	public Transition(TransitionableElement father, Point shift) {
-		this(father, shift, null);
+	public Transition(Diagram diagram, TransitionableElement father, Point shift) {
+		this(diagram, father, shift, null);
 	}
 
 	@Override
@@ -30,13 +30,14 @@ public class Transition extends Element{
 		
 		
 
-		//g2.drawLine(fromp.x, fromp.y, top.x, top.y);
+		g2.drawLine(fromp.x, fromp.y, top.x, top.y);
 		
-		Point d = new Point(top.x-fromp.x, top.y-fromp.y);
-		drawLineWithArrow(g2, fromp.x, fromp.y, top.x, top.y,Constants.ARROW_W,Constants.ARROW_H);
+		if(to instanceof Corner)return;
+		drawArrow(g2, fromp.x, fromp.y, top.x, top.y,Constants.ARROW_W,Constants.ARROW_H);
 	}
 	public void validate() {
-		from.addTransition(this);
+		from.addFromTransition(this);
+		to.addToTransition(this);
 	}
 	@Override
 	public boolean contains(Point p) {
@@ -49,7 +50,7 @@ public class Transition extends Element{
 	public void setToShift(Point toShift) {
 		this.toShift = toShift;
 	}
-	private void drawLineWithArrow(//
+	private void drawArrow(//
 									Graphics2D g2, //
 									int x1, int y1, //
 									int x2, int y2, //
@@ -67,8 +68,14 @@ public class Transition extends Element{
 		xn = x;
 		int[] xpoints = { x2, (int) xm, (int) xn };
 		int[] ypoints = { y2, (int) ym, (int) yn };
-		g2.drawLine(x1, y1, x2, y2);
+		//g2.drawLine(x1, y1, x2, y2);
 		g2.fillPolygon(xpoints, ypoints, 3);
+	}
+	public TransitionableElement getFrom() {
+		return from;
+	}
+	public TransitionableElement getTo() {
+		return to;
 	}
 
 }
