@@ -12,6 +12,7 @@ public abstract class TransitionableElement extends Element{
 	protected Point base,pos;
 	protected List<Transition>fromTs;
 	protected List<Transition>toTs;
+	CompoundState father;
 	public TransitionableElement(Diagram diagram, Point base, Point pos) {
 		super(diagram);
 		this.base = base;
@@ -54,5 +55,11 @@ public abstract class TransitionableElement extends Element{
 	}
 	public void setBase(Point base) {
 		this.base = base;
+	}
+	public CompoundState getFather() {
+		return father;
+	}
+	public void setFather(CompoundState father) {
+		this.father = father;
 	}
 }
