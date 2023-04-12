@@ -178,4 +178,10 @@ public class Diagram extends JPanel{
 		
 		if(gaux!=null)gaux.accept(g2);
 	}
+	public void insertElement(TransitionableElement e, int x) {
+		e.setBase(base);
+		e.setPos(new Point(x-base.x,-base.y));
+		this.elems.add(e);
+		((CustomMouse)mouse).currentElement = e;
+	}
 }

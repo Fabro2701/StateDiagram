@@ -11,7 +11,7 @@ public class Constants {
 	public static final Color SHADOW_COLOR = new Color(178, 178, 178);
 	
 	public static final int SIMPLE_STATE_W = 20;
-	public static final int SIMPLE_STATE_H = 50;
+	public static final int SIMPLE_STATE_H = 40;
 	public static final int INIT_STATE_W = 20;
 	public static final int INIT_STATE_H = 20;
 	public static final int SPLITTER_W = 20;

@@ -37,6 +37,9 @@ public abstract class TransitionableElement extends Element{
 		pos.x += x;
 		pos.y += y;
 	}
+	public void setPos(Point pos) {
+		this.pos = pos;
+	}
 	public void addFromTransition(Transition t) {
 		fromTs.add(t);
 	}
@@ -45,5 +48,11 @@ public abstract class TransitionableElement extends Element{
 	}
 	public Point getRelativePosition(Point p) {
 		return new Point(p.x-(this.base.x + this.pos.x), p.y-(this.base.y + this.pos.y));
+	}
+	public Point getBase() {
+		return base;
+	}
+	public void setBase(Point base) {
+		this.base = base;
 	}
 }
