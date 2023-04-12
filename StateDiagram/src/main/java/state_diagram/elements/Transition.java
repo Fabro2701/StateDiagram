@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Point;
 
+import org.json.JSONObject;
+
 import state_diagram.Constants;
 import state_diagram.Diagram;
 
@@ -40,9 +42,9 @@ public class Transition extends Element{
 		to.addToTransition(this);
 	}
 	@Override
-	public boolean contains(Point p) {
+	public TransitionableElement contains(Point p) {
 		// TODO Auto-generated method stub
-		return false;
+		return null;
 	}
 	public void setDest(TransitionableElement to) {
 		this.to = to;
@@ -76,6 +78,11 @@ public class Transition extends Element{
 	}
 	public TransitionableElement getTo() {
 		return to;
+	}
+	@Override
+	public JSONObject toJSON() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

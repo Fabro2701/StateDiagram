@@ -27,7 +27,7 @@ public abstract class TransitionableElement extends Element{
 		}
 	}
 	protected abstract void paintShadow(Graphics2D g2);
-	public abstract boolean containsShadow(Point p);
+	public abstract TransitionableElement containsShadow(Point p);
 	public Point getOver() {
 		return over;
 	}

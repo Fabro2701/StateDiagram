@@ -6,6 +6,8 @@ import java.awt.Point;
 
 import javax.swing.JMenuItem;
 
+import org.json.JSONObject;
+
 import state_diagram.Constants;
 import state_diagram.Diagram;
 
@@ -23,6 +25,10 @@ public class InitState extends TransitionableElement {
 		g2.fillOval(base.x+pos.x-w, base.y+pos.y-h, w, h);
 		/*g2.setColor(Constants.SIMPLE_STATE_COLOR);
 		g2.drawOval(base.x+pos.x-w, base.y+pos.y-h, w, h);*/
+		if(father!=null) {
+			g2.setColor(Color.gray);
+			g2.drawString(String.valueOf(father.ID), base.x+pos.x-w, base.y+pos.y-h);
+		}
 		
 	}
 
@@ -33,24 +39,33 @@ public class InitState extends TransitionableElement {
 	}
 
 	@Override
-	public boolean contains(Point p) {
+	public TransitionableElement contains(Point p) {
 		double centerx = base.x+pos.x-w/2;
 		double centery = base.y+pos.y-h/2;
 		double dx = Math.abs(p.x - centerx);
         double dy = Math.abs(p.y - centery);
         
-        return (Math.pow(dx, 2)/Math.pow(w/2, 2))+(Math.pow(dy, 2)/Math.pow(h/2, 2))<=1d;
+        if( (Math.pow(dx, 2)/Math.pow(w/2, 2))+(Math.pow(dy, 2)/Math.pow(h/2, 2))<=1d)return this;
+        return null;
 	}
 
 	@Override
-	public boolean containsShadow(Point p) {
-		if(contains(p))return false;
+	public TransitionableElement containsShadow(Point p) {
+		TransitionableElement aux = null;
+		if((aux=contains(p))!=null)return aux;
 		double centerx = base.x+pos.x-w/2;
 		double centery = base.y+pos.y-h/2;
 		double dx = Math.abs(p.x - centerx);
         double dy = Math.abs(p.y - centery);
         
-        return (Math.pow(dx, 2)/Math.pow(w/2+shadowMargin, 2))+(Math.pow(dy, 2)/Math.pow(h/2+shadowMargin, 2))<=1d;
+        if((Math.pow(dx, 2)/Math.pow(w/2+shadowMargin, 2))+(Math.pow(dy, 2)/Math.pow(h/2+shadowMargin, 2))<=1d)return this;
+        return null;
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -13,6 +13,8 @@ import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import state_diagram.Constants;
 import state_diagram.Diagram;
 
@@ -38,7 +40,7 @@ public class CompoundState extends TransitionableElement {
 	}
 	public void removeChild(TransitionableElement e) {
 		this.children.remove(e);
-		e.setFather(this);
+		e.setFather(null);
 	}
 	
 	@Override
@@ -46,7 +48,7 @@ public class CompoundState extends TransitionableElement {
 		super.paint(g2);
 		//System.out.println(children.size());
 		g2.setColor(Color.white);
-		//g2.fillRoundRect(base.x+pos.x-w, base.y+pos.y-h, w +exW, h, Constants.ARC_W, Constants.ARC_H);
+		g2.fillRoundRect(base.x+pos.x-w, base.y+pos.y-h, w +exW, h +exH, Constants.ARC_W, Constants.ARC_H);
 		g2.setColor(Constants.SIMPLE_STATE_COLOR);
 		g2.setStroke(stroke);
 		g2.drawRoundRect(base.x+pos.x-w, base.y+pos.y-h, w+exW, h+exH, Constants.ARC_W, Constants.ARC_H);
@@ -54,8 +56,18 @@ public class CompoundState extends TransitionableElement {
 
 		g2.setColor(Color.black);
 		g2.drawString(id, base.x+pos.x-w+(w-idW)/2, base.y+pos.y-h+idH);
+		
+		g2.setColor(Color.gray);
+		g2.drawString(String.valueOf(ID), base.x+pos.x-w, base.y+pos.y-h);
+		
+		for(var e:children)e.paint(g2);
 	}
-
+	@Override
+	public void move(int x, int y) {
+		pos.x += x;
+		pos.y += y;
+		for(var e:children)e.move(x, y);
+	}
 	@Override
 	protected void paintShadow(Graphics2D g2) {
 		g2.setColor(Constants.SHADOW_COLOR);
@@ -65,22 +77,44 @@ public class CompoundState extends TransitionableElement {
 	}
 
 	@Override
-	public boolean contains(Point p) {
-		return (p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
-			   (p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y-(h-(COMPOUND_STATE_HEADER+idH)));
+	public TransitionableElement contains(Point p) {
+		if((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
+		(p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y-(h-(COMPOUND_STATE_HEADER+idH))))return this;
+
+		TransitionableElement aux = null;
+		for(var child:children) {
+			if((aux=child.contains(p))!=null)return aux;
+		}
+		return null;
 	}
 
 	@Override
-	public boolean containsShadow(Point p) {
+	public TransitionableElement containsShadow(Point p) {
+		TransitionableElement aux = null;
+		for(var child:children) {
+			if((aux=child.containsShadow(p))!=null)return aux;
+		}
 		if((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
-		   (p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y +exH))return false;
-		return (p.x>=base.x+pos.x-w-shadowMargin&&p.x<=base.x+pos.x+shadowMargin +exW)&&
-			   (p.y>=base.y+pos.y-h-shadowMargin&&p.y<=base.y+pos.y+shadowMargin +exH);
+		   (p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y +exH))return null;
+		
+		if( (p.x>=base.x+pos.x-w-shadowMargin&&p.x<=base.x+pos.x+shadowMargin +exW)&&
+			   (p.y>=base.y+pos.y-h-shadowMargin&&p.y<=base.y+pos.y+shadowMargin +exH))return this;
+		return null;
 	}
-	public boolean containsInside(Point p) {
-		if(contains(p))return false;
-		return ((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
-				(p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y +exH));
+	public CompoundState containsInside(Point p) {
+		CompoundState aux = null;
+		if((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
+				(p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y-(h-(COMPOUND_STATE_HEADER+idH))))return null;
+		
+		for(var child:children) {
+			if(child instanceof CompoundState) {
+				if((aux=((CompoundState)child).containsInside(p))!=null)return aux;
+			}
+			
+		}
+		if( ((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
+				(p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y +exH)))return this;
+		return null;
 	}
 	public enum RESIZE_DIR{
 		HORIZONTAL,VERTICAL
@@ -92,9 +126,21 @@ public class CompoundState extends TransitionableElement {
 
 	public void increaseWidth(int i) {
 		this.exW += i;
+		for(var t:this.fromTs) {
+			t.fromShift.x += i;
+		}
+		for(var t:this.toTs) {
+			t.toShift.x += i;
+		}
 	}
 	public void increaseHeight(int i) {
 		this.exH += i;
+		for(var t:this.fromTs) {
+			t.fromShift.y += i;
+		}
+		for(var t:this.toTs) {
+			t.toShift.y += i;
+		}
 	}
 	private void updateId(String id) {
 		int lastw = idW;
@@ -109,11 +155,19 @@ public class CompoundState extends TransitionableElement {
 		for(var t:this.toTs) {
 			t.toShift.x += idW-lastw;
 		}
+		
 	}
 	private Rectangle2D getIdBounds() {
 		AffineTransform affinetransform = new AffineTransform();     
 		FontRenderContext frc = new FontRenderContext(affinetransform,true,true);     
 		return Constants.TEXT_FONT.getStringBounds(id, frc);
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		return new JSONObject().put("type", "SimpleState")
+				   			   .put("ID", ID)
+				   			   .put("id", id);
 	}
 
 }

@@ -60,9 +60,10 @@ public class Diagram extends JPanel{
 		public void mouseClicked(MouseEvent ev) {
 	    	Point p = ev.getPoint();
 			if (SwingUtilities.isRightMouseButton(ev)) {
+    			TransitionableElement aux = null;
 				for(TransitionableElement e:elems) {
-		    		if(e.contains(p)) {
-		    			e.openMenu(p);
+		    		if((aux=e.contains(p))!=null) {
+		    			aux.openMenu(p);
 		    			break;
 		    		}
 		    	}
@@ -73,9 +74,10 @@ public class Diagram extends JPanel{
 	    	pressed = true;
 	    	currentPoint = p;
 	    	if(currentElement==null) {
+    			TransitionableElement aux = null;
 	    		for(TransitionableElement e:elems) {
-		    		if(e.contains(p)) {
-		    			currentElement = e;
+		    		if((aux=e.contains(p))!=null) {
+		    			currentElement = aux;
 		    			Diagram.this.setCursor(Constants.HAND_CURSOR);
 		    			break;
 		    		}
@@ -88,33 +90,60 @@ public class Diagram extends JPanel{
 	    	if(currentTransition!=null) {
 	    		for(TransitionableElement e:elems) {
 	    			if(e==currentTransition.getFrom())continue;
-		    		if(e.containsShadow(p)) {
-		    			currentTransition.setDest(e);
-		    			currentTransition.setToShift(e.getRelativePosition(p));
+	    			TransitionableElement aux = null;
+		    		if((aux=e.containsShadow(p))!=null) {
+		    			currentTransition.setDest(aux);
+		    			currentTransition.setToShift(aux.getRelativePosition(p));
 		    			currentTransition.validate();
 		    			ts.add(currentTransition);
 		    			break;
 		    		}
 		    	}
 	    	}
-	    	if(currentCompound!=null) {
-	    		CompoundState father=null;
-				if((father=currentElement.getFather())!=null) {
-					if(!father.containsInside(p)) {
-						father.removeChild(currentElement);
-					}
-				}
+	    	if(currentElement!=null) {
+				boolean found = false;
 	    		for(var e:elems) {//put elem inside a cmp
+	    			if(currentElement == e)continue;
     				if(e instanceof CompoundState) {
     					CompoundState cse = (CompoundState)e;
-    					if(cse.containsInside(p)) {
-    						currentCompound = cse;
-    			    		currentCompound.insertChild(currentElement);
+    					TransitionableElement aux = null;
+    					if((aux=cse.containsInside(p))!=null) {
+    						currentCompound = (CompoundState) aux;
     						Diagram.this.setCursor(Constants.DEFAULT_CURSOR);
+    						found = true;
+    						break;
     					}
     				}
     			}
+	    		if(found) {
+	    			if(currentElement.getFather()!=null) {
+	    				currentElement.getFather().removeChild(currentElement);
+	    			}
+	    			else Diagram.this.elems.remove(currentElement);
+		    		currentCompound.insertChild(currentElement);
+	    		}
+			}
+	    	if(currentElement!=null) {
+	    		boolean found = false;
+	    		CompoundState father=null,aux=null;
+				if((father=currentElement.getFather())!=null) {
+					if(currentElement != father) {
+						if((aux=father.containsInside(p))!=father&&aux!=currentElement) {
+							father.removeChild(currentElement);
+							currentElement.setFather(aux);
+							found = true;
+						}
+					}
+					
+				}
+				if(found) {
+					if(father.getFather()==null) {
+						Diagram.this.elems.add(currentElement);
+					}
+					
+				}
 	    	}
+	    	
 	    	currentElement = null;
 	    	if(shadowElement!=null)shadowElement.setOver(null);
 	    	shadowElement = null;
@@ -139,8 +168,9 @@ public class Diagram extends JPanel{
 		    			gaux = g2->g2.drawLine(from.x, from.y, p.x, p.y);
 		    			//shadowElement=null;
 		    			for(TransitionableElement e:elems) {
-		    	    		if(e.containsShadow(p)) {
-		    	    			e.setOver(p);
+	    					TransitionableElement aux = null;
+		    	    		if((aux=e.containsShadow(p))!=null) {
+		    	    			aux.setOver(p);
 		    	    			repaint();
 		    	    			break;
 		    	    		}
@@ -160,9 +190,10 @@ public class Diagram extends JPanel{
 	    			Diagram.this.setCursor(Constants.HAND_CURSOR);
 	    			for(var e:elems) {//put elem inside a cmp
 	    				if(e instanceof CompoundState) {
+	    					TransitionableElement aux = null;
 	    					CompoundState cse = (CompoundState)e;
-	    					if(cse.containsInside(p)) {
-	    						currentCompound = cse;
+	    					if((aux=cse.containsInside(p))!=null) {
+	    						currentCompound = (CompoundState) aux;
 	    						Diagram.this.setCursor(Constants.WAIT_CURSOR);
 	    					}
 	    				}
@@ -217,17 +248,18 @@ public class Diagram extends JPanel{
 	    		shadowElement = null;
 	    		r = true;
 	    	}
+	    	TransitionableElement aux = null;
 	    	for(TransitionableElement e:elems) {
-	    		if(e.contains(p)) {
+	    		if((aux=e.contains(p))!=null) {
 	    			Diagram.this.setCursor(Constants.HAND_CURSOR);
-	    			shadowElement = e;
+	    			shadowElement = aux;
 	    			r = true;
 	    			break;
 	    		}
-	    		else if(e.containsShadow(p)) {
+	    		else if((aux=e.containsShadow(p))!=null) {
 	    			Diagram.this.setCursor(Constants.CROSSHAIR_CURSOR);
-	    			e.setOver(p);
-	    			shadowElement = e;
+	    			aux.setOver(p);
+	    			shadowElement = aux;
 	    			r = true;
 	    			break;
 	    		}

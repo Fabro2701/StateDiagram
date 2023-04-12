@@ -66,7 +66,7 @@ public class ToolBar extends JPanel{
 	    	currentPoint = p;
 	    	if(currentElement==null) {
 	    		for(TransitionableElement e:elems) {
-		    		if(e.contains(p)) {
+		    		if(e.contains(p)!=null) {
 		    			currentElement = e;
 		    			break;
 		    		}

@@ -8,6 +8,8 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
+
 import state_diagram.Constants;
 import state_diagram.Diagram;
 
@@ -35,16 +37,25 @@ public class Corner extends TransitionableElement {
 	}
 
 	@Override
-	public boolean contains(Point p) {
-		return (p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x)&&
-			   (p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y);
+	public TransitionableElement contains(Point p) {
+		if((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x)&&
+			   (p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y))return this;
+		return null;
 	}
 
 	@Override
-	public boolean containsShadow(Point p) {
-		if(contains(p))return false;
-		return (p.x>=base.x+pos.x-w-shadowMargin&&p.x<=base.x+pos.x+shadowMargin)&&
-			   (p.y>=base.y+pos.y-h-shadowMargin&&p.y<=base.y+pos.y+shadowMargin);
+	public TransitionableElement containsShadow(Point p) {
+		TransitionableElement aux = null;
+		if((aux=contains(p))!=null)return aux;
+		if((p.x>=base.x+pos.x-w-shadowMargin&&p.x<=base.x+pos.x+shadowMargin)&&
+			   (p.y>=base.y+pos.y-h-shadowMargin&&p.y<=base.y+pos.y+shadowMargin))return this;
+		return null;
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
