@@ -61,7 +61,7 @@ public abstract class TransitionableElement extends Element{
 
     protected void print(StringBuilder buffer, String prefix, String childrenPrefix) {
         buffer.append(prefix);
-        buffer.append(this.id());
+        buffer.append(this.id()+"("+ID+")");
         buffer.append('\n');
     }
 	public void setOver(Point over) {

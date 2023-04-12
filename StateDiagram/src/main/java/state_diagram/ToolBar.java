@@ -45,6 +45,7 @@ public class ToolBar extends JPanel{
 		init();
 	}
 	public void init() {
+		this.elems.clear();
 		this.elems.add(new InitState(null, base, new Point(40,(70+Constants.INIT_STATE_H)/2)));
 		this.elems.add(new SimpleState(null, base, new Point(80,(70+Constants.SIMPLE_STATE_H)/2)));
 		this.elems.add(new Splitter(null, base, new Point(140,(70+Constants.SPLITTER_H)/2)));
@@ -84,6 +85,8 @@ public class ToolBar extends JPanel{
 			currentPoint = null;
 	    	pressed = false;
 			out = false;
+			init();
+			repaint();
 	    }
 	    public void mouseEntered(MouseEvent ev) {}
 	    public void mouseExited(MouseEvent ev) {}

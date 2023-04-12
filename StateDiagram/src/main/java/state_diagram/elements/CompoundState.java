@@ -191,7 +191,7 @@ public class CompoundState extends TransitionableElement {
 	@Override
 	protected void print(StringBuilder buffer, String prefix, String childrenPrefix) {
         buffer.append(prefix);
-        buffer.append(this.id());
+        buffer.append(this.id()+"("+ID+")");
         buffer.append('\n');
         for (Iterator<TransitionableElement> it = children.iterator(); it.hasNext();) {
         	TransitionableElement next = it.next();

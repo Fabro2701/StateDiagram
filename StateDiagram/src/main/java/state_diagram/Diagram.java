@@ -32,6 +32,7 @@ import state_diagram.elements.CompoundState;
 import state_diagram.elements.CompoundState.RESIZE_DIR;
 import state_diagram.elements.Corner;
 import state_diagram.elements.Element;
+import state_diagram.elements.IdGenerator;
 import state_diagram.elements.InitState;
 import state_diagram.elements.SimpleState;
 import state_diagram.elements.Splitter;
@@ -54,11 +55,11 @@ public class Diagram extends JPanel{
 		this.addMouseMotionListener(mouse);
 		this.addMouseWheelListener(mouse);
 		
-		this.elems.add(new SimpleState(this, base, new Point(200,300)));
+		/*this.elems.add(new SimpleState(this, base, new Point(200,300)));
 		this.elems.add(new Splitter(this, base, new Point(400,300)));
 		this.elems.add(new InitState(this, base, new Point(400,500)));
 		this.elems.add(new Corner(this, base, new Point(100,100)));
-		this.elems.add(new CompoundState(this, base, new Point(300,100)));
+		this.elems.add(new CompoundState(this, base, new Point(300,100)));*/
 	}
 
 	private class CustomMouse extends MouseAdapter{
@@ -310,6 +311,7 @@ public class Diagram extends JPanel{
 		System.out.println(tree);
 	}
 	public void insertElement(TransitionableElement e, int x) {
+		e.ID = IdGenerator.nextId();
 		e.setBase(base);
 		e.setPos(new Point(x-base.x,-base.y));
 		this.elems.add(e);
