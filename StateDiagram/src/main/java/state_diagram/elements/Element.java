@@ -33,4 +33,7 @@ public abstract class Element {
 	public abstract TransitionableElement contains(Point p);
 	
 	public abstract JSONObject toJSON();
+	public void setDiagram(Diagram diagram) {
+		this.diagram = diagram;
+	}
 }

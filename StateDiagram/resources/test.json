@@ -1,158 +1,554 @@
 {
     "elems": [
         {
+            "exH": 470,
             "pos": {
-                "x": 400,
-                "y": 500
+                "x": 252,
+                "y": 195
             },
-            "ID": 2,
+            "exW": 720,
+            "ID": 102,
+            "id": "compid",
+            "type": "CompoundState"
+        },
+        {
+            "exH": 367,
+            "pos": {
+                "x": 293,
+                "y": 278
+            },
+            "exW": 390,
+            "fatherID": 102,
+            "ID": 5,
+            "id": "compid",
+            "type": "CompoundState"
+        },
+        {
+            "pos": {
+                "x": 418,
+                "y": 405
+            },
+            "fatherID": 5,
+            "ID": 51,
+            "type": "Splitter"
+        },
+        {
+            "pos": {
+                "x": 411,
+                "y": 306
+            },
+            "fatherID": 5,
+            "ID": 18,
+            "id": "id",
+            "type": "SimpleState"
+        },
+        {
+            "pos": {
+                "x": 411,
+                "y": 544
+            },
+            "fatherID": 5,
+            "ID": 40,
+            "id": "id",
+            "type": "SimpleState"
+        },
+        {
+            "pos": {
+                "x": 278,
+                "y": 417
+            },
+            "fatherID": 5,
+            "ID": 29,
+            "id": "id",
+            "type": "SimpleState"
+        },
+        {
+            "pos": {
+                "x": 286,
+                "y": 305
+            },
+            "fatherID": 5,
+            "ID": 62,
             "type": "InitState"
         },
         {
             "pos": {
-                "x": 100,
-                "y": 100
+                "x": 579,
+                "y": 298
             },
-            "ID": 3,
+            "fatherID": 5,
+            "ID": 77,
+            "type": "Splitter"
+        },
+        {
+            "pos": {
+                "x": 577,
+                "y": 534
+            },
+            "fatherID": 5,
+            "ID": 88,
+            "type": "Splitter"
+        },
+        {
+            "pos": {
+                "x": 805,
+                "y": 399
+            },
+            "fatherID": 102,
+            "ID": 150,
+            "id": "id",
+            "type": "SimpleState"
+        },
+        {
+            "pos": {
+                "x": 809,
+                "y": 555
+            },
+            "fatherID": 102,
+            "ID": 161,
+            "id": "id",
+            "type": "SimpleState"
+        },
+        {
+            "pos": {
+                "x": 810,
+                "y": 201
+            },
+            "fatherID": 102,
+            "ID": 205,
+            "type": "InitState"
+        },
+        {
+            "pos": {
+                "x": 812,
+                "y": 271
+            },
+            "fatherID": 102,
+            "ID": 216,
+            "type": "Splitter"
+        },
+        {
+            "pos": {
+                "x": 882,
+                "y": 265
+            },
+            "fatherID": 102,
+            "ID": 231,
             "type": "Corner"
         },
         {
-            "exH": 243,
             "pos": {
-                "x": 408,
-                "y": 123
+                "x": 882,
+                "y": 531
             },
-            "exW": 154,
-            "ID": 4,
-            "id": "compid",
-            "type": "CompoundState"
-        },
-        {
-            "exH": 36,
-            "pos": {
-                "x": 440,
-                "y": 172
-            },
-            "exW": 16,
-            "fatherID": 4,
-            "ID": 9,
-            "id": "compid",
-            "type": "CompoundState"
+            "fatherID": 102,
+            "ID": 242,
+            "type": "Corner"
         },
         {
             "pos": {
-                "x": 387,
-                "y": 184
+                "x": 417,
+                "y": 50
             },
-            "fatherID": 9,
-            "ID": 0,
-            "id": "id",
-            "type": "SimpleState"
-        },
-        {
-            "pos": {
-                "x": 446,
-                "y": 151
-            },
-            "fatherID": 9,
-            "ID": 1,
-            "type": "Splitter"
-        },
-        {
-            "pos": {
-                "x": 403,
-                "y": 253
-            },
-            "fatherID": 4,
-            "ID": 5,
+            "ID": 114,
             "type": "InitState"
         },
         {
             "pos": {
-                "x": 494,
-                "y": 132
+                "x": 681,
+                "y": 62
             },
-            "fatherID": 4,
-            "ID": 7,
-            "type": "Splitter"
-        },
-        {
-            "exH": 0,
-            "pos": {
-                "x": 536,
-                "y": 320
-            },
-            "exW": 0,
-            "fatherID": 4,
-            "ID": 9,
-            "id": "compid",
-            "type": "CompoundState"
-        },
-        {
-            "pos": {
-                "x": 491,
-                "y": 313
-            },
-            "fatherID": 9,
-            "ID": 6,
+            "ID": 126,
             "id": "id",
             "type": "SimpleState"
         },
         {
-            "toID": 0,
-            "fromShift": {
-                "x": -20,
-                "y": -15
+            "pos": {
+                "x": 1040,
+                "y": 55
             },
-            "toShift": {
-                "x": 17,
-                "y": -24
-            },
-            "ID": 0,
-            "type": "Transition",
-            "fromID": 2
+            "ID": 138,
+            "type": "Splitter"
         },
         {
-            "toID": 0,
-            "fromShift": {
-                "x": -15,
-                "y": -20
+            "pos": {
+                "x": 1038,
+                "y": 379
             },
-            "toShift": {
-                "x": 4,
+            "ID": 179,
+            "type": "Corner"
+        },
+        {
+            "pos": {
+                "x": 1040,
+                "y": 554
+            },
+            "ID": 192,
+            "type": "Corner"
+        },
+        {
+            "toID": 29,
+            "fromShift": {
+                "x": -11,
                 "y": 3
             },
-            "ID": 0,
+            "toShift": {
+                "x": -3,
+                "y": -43
+            },
+            "ID": 73,
             "type": "Transition",
-            "fromID": 1
+            "fromID": 62
         },
         {
-            "toID": 3,
+            "toID": 51,
             "fromShift": {
-                "x": -24,
+                "x": 17,
+                "y": -21
+            },
+            "toShift": {
+                "x": -20,
+                "y": -9
+            },
+            "ID": 74,
+            "type": "Transition",
+            "fromID": 29
+        },
+        {
+            "toID": 18,
+            "fromShift": {
+                "x": -11,
+                "y": -21
+            },
+            "toShift": {
+                "x": -4,
+                "y": 1
+            },
+            "ID": 75,
+            "type": "Transition",
+            "fromID": 51
+        },
+        {
+            "toID": 40,
+            "fromShift": {
+                "x": -10,
+                "y": 2
+            },
+            "toShift": {
+                "x": -3,
+                "y": -40
+            },
+            "ID": 76,
+            "type": "Transition",
+            "fromID": 51
+        },
+        {
+            "toID": 88,
+            "fromShift": {
+                "x": 17,
                 "y": -19
             },
             "toShift": {
-                "x": 2,
-                "y": -1
+                "x": -19,
+                "y": -9
             },
-            "ID": 0,
+            "ID": 100,
             "type": "Transition",
-            "fromID": 0
+            "fromID": 40
         },
         {
-            "toID": 2,
+            "toID": 77,
             "fromShift": {
-                "x": -6,
-                "y": 5
+                "x": 16,
+                "y": -17
             },
             "toShift": {
-                "x": -22,
-                "y": -12
+                "x": -19,
+                "y": -9
             },
-            "ID": 0,
+            "ID": 101,
             "type": "Transition",
-            "fromID": 3
+            "fromID": 18
+        },
+        {
+            "toID": 102,
+            "fromShift": {
+                "x": -9,
+                "y": 4
+            },
+            "toShift": {
+                "x": 157,
+                "y": -90
+            },
+            "ID": 125,
+            "type": "Transition",
+            "fromID": 114
+        },
+        {
+            "toID": 126,
+            "fromShift": {
+                "x": 429,
+                "y": -92
+            },
+            "toShift": {
+                "x": -1,
+                "y": 2
+            },
+            "ID": 137,
+            "type": "Transition",
+            "fromID": 102
+        },
+        {
+            "toID": 138,
+            "fromShift": {
+                "x": 16,
+                "y": -19
+            },
+            "toShift": {
+                "x": -21,
+                "y": -8
+            },
+            "ID": 149,
+            "type": "Transition",
+            "fromID": 126
+        },
+        {
+            "toID": 150,
+            "fromShift": {
+                "x": 2,
+                "y": -9
+            },
+            "toShift": {
+                "x": -19,
+                "y": -25
+            },
+            "ID": 172,
+            "type": "Transition",
+            "fromID": 77
+        },
+        {
+            "toID": 161,
+            "fromShift": {
+                "x": 1,
+                "y": -8
+            },
+            "toShift": {
+                "x": -19,
+                "y": -31
+            },
+            "ID": 173,
+            "type": "Transition",
+            "fromID": 77
+        },
+        {
+            "toID": 150,
+            "fromShift": {
+                "x": 6,
+                "y": -42
+            },
+            "toShift": {
+                "x": 10,
+                "y": 0
+            },
+            "ID": 174,
+            "type": "Transition",
+            "fromID": 161
+        },
+        {
+            "toID": 161,
+            "fromShift": {
+                "x": -9,
+                "y": 4
+            },
+            "toShift": {
+                "x": -12,
+                "y": -42
+            },
+            "ID": 175,
+            "type": "Transition",
+            "fromID": 150
+        },
+        {
+            "toID": 150,
+            "fromShift": {
+                "x": 2,
+                "y": -10
+            },
+            "toShift": {
+                "x": -18,
+                "y": -10
+            },
+            "ID": 176,
+            "type": "Transition",
+            "fromID": 88
+        },
+        {
+            "toID": 161,
+            "fromShift": {
+                "x": 1,
+                "y": -11
+            },
+            "toShift": {
+                "x": -19,
+                "y": -25
+            },
+            "ID": 177,
+            "type": "Transition",
+            "fromID": 88
+        },
+        {
+            "toID": 5,
+            "fromShift": {
+                "x": -23,
+                "y": -9
+            },
+            "toShift": {
+                "x": 391,
+                "y": 268
+            },
+            "ID": 178,
+            "type": "Transition",
+            "fromID": 161
+        },
+        {
+            "toID": 179,
+            "fromShift": {
+                "x": -8,
+                "y": 4
+            },
+            "toShift": {
+                "x": -4,
+                "y": -6
+            },
+            "ID": 190,
+            "type": "Transition",
+            "fromID": 138
+        },
+        {
+            "toID": 150,
+            "fromShift": {
+                "x": -9,
+                "y": -2
+            },
+            "toShift": {
+                "x": 13,
+                "y": -24
+            },
+            "ID": 191,
+            "type": "Transition",
+            "fromID": 179
+        },
+        {
+            "toID": 192,
+            "fromShift": {
+                "x": -9,
+                "y": 3
+            },
+            "toShift": {
+                "x": -4,
+                "y": -7
+            },
+            "ID": 203,
+            "type": "Transition",
+            "fromID": 138
+        },
+        {
+            "toID": 161,
+            "fromShift": {
+                "x": -9,
+                "y": -5
+            },
+            "toShift": {
+                "x": 14,
+                "y": -11
+            },
+            "ID": 204,
+            "type": "Transition",
+            "fromID": 192
+        },
+        {
+            "toID": 216,
+            "fromShift": {
+                "x": -9,
+                "y": 2
+            },
+            "toShift": {
+                "x": -10,
+                "y": -18
+            },
+            "ID": 227,
+            "type": "Transition",
+            "fromID": 205
+        },
+        {
+            "toID": 150,
+            "fromShift": {
+                "x": -9,
+                "y": 2
+            },
+            "toShift": {
+                "x": 0,
+                "y": -39
+            },
+            "ID": 228,
+            "type": "Transition",
+            "fromID": 216
+        },
+        {
+            "toID": 5,
+            "fromShift": {
+                "x": -21,
+                "y": -9
+            },
+            "toShift": {
+                "x": 391,
+                "y": -19
+            },
+            "ID": 230,
+            "type": "Transition",
+            "fromID": 216
+        },
+        {
+            "toID": 231,
+            "fromShift": {
+                "x": 1,
+                "y": -9
+            },
+            "toShift": {
+                "x": -6,
+                "y": -2
+            },
+            "ID": 253,
+            "type": "Transition",
+            "fromID": 216
+        },
+        {
+            "toID": 242,
+            "fromShift": {
+                "x": -4,
+                "y": 3
+            },
+            "toShift": {
+                "x": -4,
+                "y": -4
+            },
+            "ID": 254,
+            "type": "Transition",
+            "fromID": 231
+        },
+        {
+            "toID": 161,
+            "fromShift": {
+                "x": -9,
+                "y": -4
+            },
+            "toShift": {
+                "x": 15,
+                "y": -29
+            },
+            "ID": 255,
+            "type": "Transition",
+            "fromID": 242
         }
     ],
     "base": {

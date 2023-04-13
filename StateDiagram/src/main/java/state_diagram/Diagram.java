@@ -63,6 +63,7 @@ public class Diagram extends JPanel{
 	}
 
 	private class CustomMouse extends MouseAdapter{
+		
 		TransitionableElement currentElement = null;
 		TransitionableElement shadowElement = null;
 		CompoundState currentCompound = null;
@@ -314,6 +315,7 @@ public class Diagram extends JPanel{
 		e.ID = IdGenerator.nextId();
 		e.setBase(base);
 		e.setPos(new Point(x-base.x,-base.y));
+		e.setDiagram(this);
 		this.elems.add(e);
 		((CustomMouse)mouse).currentElement = e;
 	}
