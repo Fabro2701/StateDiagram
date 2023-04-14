@@ -12,28 +12,45 @@ public class StateProduct extends Product{
 	TransitionProduct t;
 	public StateProduct(FlowController ctrl, SimpleState state) {
 		super(ctrl);
+		ctrl.products.put(state, this);
+		
 		this.state = state;
-		this.rest = state.getRest();
+		this.rest = 2;
 		this.continuous = state.isContinuous();
+		
+		Transition te = state.getFromTs().get(0);
+		if(ctrl.products.containsKey(te)) {
+			this.t = (TransitionProduct) ctrl.products.get(te);
+		}
 		this.t = new TransitionProduct(ctrl, state.getFromTs().get(0));
+		cont = rest;
 	}
 	@Override
 	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		if(cont>=rest) {
-			FlowController.invoke(state.getId()+"Action"+String.valueOf(state.ID), null);
-			cont--;
-			if(cont == rest) {
-				if((Boolean)t.execute()) {
-					t.advance();
-				}
-			}
+		//System.out.println("call");
+		if(rest==0) {
+			action();
+			t.execute();
 		}
 		else {
-			cont = rest;
-			if((Boolean)t.execute()) {
-				t.advance();
+			if(cont == rest) {
+				action();
+				cont --;
+			}
+			else if(cont >= 0) {
+				if(continuous)action();
+				cont --;
+			}
+			else {
+				if(continuous)action();
+				cont = rest;
+				t.execute();
 			}
 		}
+
 		return null;
+	}
+	public void action() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		FlowController.invoke(state.getId()+"Action"+String.valueOf(state.ID), null);
 	}
 }

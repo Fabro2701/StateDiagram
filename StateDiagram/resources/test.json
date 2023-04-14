@@ -1,64 +1,56 @@
 {
     "elems": [
         {
-            "pos": {
-                "x": 70,
-                "y": 49
-            },
-            "ID": 6,
-            "type": "InitState"
-        },
-        {
             "rest": 0,
             "pos": {
-                "x": 136,
-                "y": 57
+                "x": 227,
+                "y": 98
             },
             "continuous": false,
             "action": "",
-            "ID": 19,
+            "ID": 6,
             "id": "id",
             "type": "SimpleState"
         },
         {
             "pos": {
-                "x": 206,
-                "y": 55
+                "x": 91,
+                "y": 74
             },
-            "ID": 33,
-            "type": "EndState"
+            "ID": 19,
+            "type": "InitState"
+        },
+        {
+            "toID": 6,
+            "fromShift": {
+                "x": 2,
+                "y": -7
+            },
+            "toShift": {
+                "x": -22,
+                "y": -25
+            },
+            "ID": 32,
+            "type": "Transition",
+            "fromID": 19
         },
         {
             "toID": 19,
             "fromShift": {
-                "x": 2,
-                "y": -15
+                "x": -22,
+                "y": -2
             },
             "toShift": {
-                "x": -21,
-                "y": -19
+                "x": -5,
+                "y": 1
             },
-            "ID": 32,
+            "ID": 33,
             "type": "Transition",
             "fromID": 6
-        },
-        {
-            "toID": 33,
-            "fromShift": {
-                "x": 16,
-                "y": -23
-            },
-            "toShift": {
-                "x": -18,
-                "y": -9
-            },
-            "ID": 46,
-            "type": "Transition",
-            "fromID": 19
         }
     ],
     "base": {
-        "x": 1,
+        "x": 0,
         "y": 0
     }
 }

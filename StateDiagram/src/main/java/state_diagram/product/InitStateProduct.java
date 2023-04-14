@@ -3,20 +3,28 @@ package state_diagram.product;
 import java.lang.reflect.InvocationTargetException;
 
 import state_diagram.elements.InitState;
+import state_diagram.elements.Transition;
 
 public class InitStateProduct extends Product{
 	InitState state;
 	TransitionProduct t;
 	public InitStateProduct(FlowController ctrl, InitState state) {
 		super(ctrl);
+		ctrl.products.put(state, this);
+		
 		this.state = state;
-		this.t = new TransitionProduct(ctrl, state.getFromTs().get(0));
+		Transition te = state.getFromTs().get(0);
+		if(ctrl.products.containsKey(te)) {
+			this.t = (TransitionProduct) ctrl.products.get(te);
+		}
+		else{
+			this.t = new TransitionProduct(ctrl, te);
+		}
 	}
 	@Override
 	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-			if((Boolean)t.execute()) {
-				t.advance();
-			}
+		t.execute();
+		ctrl.step(null);
 		return null;
 	}
 }

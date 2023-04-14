@@ -2,15 +2,20 @@ package state_diagram.product;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import state_diagram.Diagram;
+import state_diagram.elements.Element;
 import state_diagram.elements.InitState;
 
 public class FlowController {
 	Product current;
+	Map<Element,Product>products;
 	public FlowController() {
-		
+		products = new HashMap<>();
 	}
+	
 	public void step(Object ob) {
 		try {
 			current.execute();
@@ -41,6 +46,10 @@ public class FlowController {
 	    return method.invoke(null, params);
 	}
 	
+	public Map<Element, Product> getProducts() {
+		return products;
+	}
+
 	public static void main(String args[]) {
 		Diagram diagram = new Diagram();
 		try {
@@ -50,10 +59,14 @@ public class FlowController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		FlowController ctrl = new FlowController(); 
-		InitState ini = (InitState)diagram.getElems().get(0);
+		InitState ini = diagram.getInit();
 		ctrl.setCurrent(new InitStateProduct(ctrl, ini));
-		ctrl.step(null);
-		ctrl.step(null);
+		
+		for(int i=0;i<8;i++) {
+			System.out.println("Exec "+i+" :");
+			ctrl.step(null);
+		}
 	}
 }

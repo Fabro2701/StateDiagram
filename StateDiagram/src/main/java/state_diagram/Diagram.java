@@ -419,5 +419,7 @@ public class Diagram extends JPanel{
 	public List<TransitionableElement> getElems() {
 		return elems;
 	}
-	
+	public InitState getInit() {
+		return (InitState) elems.stream().filter(e->e instanceof InitState).findAny().get();
+	}
 }

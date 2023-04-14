@@ -8,6 +8,7 @@ public class EndStateProduct extends Product{
 
 	public EndStateProduct(FlowController ctrl, EndState state) {
 		super(ctrl);
+		ctrl.products.put(state, this);
 
 	}
 	@Override
