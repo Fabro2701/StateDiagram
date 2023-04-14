@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import state_diagram.Constants;
 import state_diagram.Diagram;
 import state_diagram.Util;
+import state_diagram.elements.properties.InitStateProperties;
+import state_diagram.elements.properties.SimpleStateProperties;
 
 public class InitState extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
@@ -37,7 +39,11 @@ public class InitState extends TransitionableElement {
 		}
 		
 	}
-
+	@Override
+	public void properties() {
+		if(properties==null)properties = new InitStateProperties(diagram.getProps(),this);
+		properties.load();
+	}
 	@Override
 	protected void paintShadow(Graphics2D g2) {
 		g2.setColor(Constants.SHADOW_COLOR);

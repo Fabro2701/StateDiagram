@@ -1,3 +1,4 @@
+
 package state_diagram;
 
 import java.awt.BasicStroke;
@@ -21,6 +22,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
 import org.json.JSONArray;
@@ -45,6 +47,7 @@ public class Diagram extends JPanel{
 	List<Transition>ts;
 	MouseAdapter mouse;
 	Consumer<Graphics2D>gaux;
+	private JScrollPane props;
 	public Diagram() {
 		this.base = new Point(0,0);
 		this.elems = new ArrayList<>();
@@ -72,12 +75,28 @@ public class Diagram extends JPanel{
 		boolean pressed = false;
 		
 		public void mouseClicked(MouseEvent ev) {
+			Diagram.this.requestFocus();
 	    	Point p = ev.getPoint();
 			if (SwingUtilities.isRightMouseButton(ev)) {
     			TransitionableElement aux = null;
 				for(TransitionableElement e:elems) {
 		    		if((aux=e.contains(p))!=null) {
 		    			aux.openMenu(p);
+		    			break;
+		    		}
+		    	}
+			}
+			else if (SwingUtilities.isLeftMouseButton(ev)) {
+    			TransitionableElement aux = null;
+				for(TransitionableElement e:elems) {
+		    		if((aux=e.contains(p))!=null) {
+		    			aux.properties();
+		    			break;
+		    		}
+		    	}
+				for(var t:ts) {
+		    		if((aux=t.contains(p))!=null) {
+		    			aux.properties();
 		    			break;
 		    		}
 		    	}
@@ -309,7 +328,7 @@ public class Diagram extends JPanel{
 			h += r.getHeight();
 			g2.drawString(line, 0f, h);
 		}
-		System.out.println(tree);
+		//System.out.println(tree);
 	}
 	public void insertElement(TransitionableElement e, int x) {
 		e.ID = IdGenerator.nextId();
@@ -320,6 +339,7 @@ public class Diagram extends JPanel{
 		((CustomMouse)mouse).currentElement = e;
 	}
 	public void save() {
+		System.out.println("Saving");
 		JSONObject ob = new JSONObject();
 		ob.put("base", new JSONObject().put("x", base.x).put("y", base.y));
 		JSONArray arr = new JSONArray();
@@ -352,6 +372,7 @@ public class Diagram extends JPanel{
 		return arr;
 	}
 	public void load() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException {
+		System.out.println("Loading");
 		this.ts.clear();
 		this.elems.clear();
 		JSONObject ob = null;
@@ -373,6 +394,7 @@ public class Diagram extends JPanel{
 			tmpElements.add(e);
 			if(e instanceof Transition) {
 				this.ts.add((Transition) e);
+				((Transition) e).validate();
 			}
 			else {
 				if(((TransitionableElement) e).getFather()==null) {
@@ -387,6 +409,15 @@ public class Diagram extends JPanel{
 	}
 	public Point getBase() {
 		return base;
+	}
+	public void setPropertiesPanel(JScrollPane props) {
+		this.props = props;
+	}
+	public JScrollPane getProps() {
+		return props;
+	}
+	public List<TransitionableElement> getElems() {
+		return elems;
 	}
 	
 }

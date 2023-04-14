@@ -5,17 +5,21 @@ import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
 
-import javax.swing.JMenuItem;
-
 import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
 import state_diagram.Util;
+import state_diagram.elements.properties.TransitionProperties;
 
 public class Transition extends Element{
 	TransitionableElement from,to;
 	Point fromShift,toShift;
+	
+	public enum TRANSITION_TYPE{TRUE,COND,STOCHASTIC}
+	TRANSITION_TYPE type = TRANSITION_TYPE.TRUE;
+	String code;
+	
 	public Transition(Diagram diagram, TransitionableElement from, Point fromShift, TransitionableElement to) {
 		super(diagram);
 		this.from = from;
@@ -32,7 +36,11 @@ public class Transition extends Element{
 		this.fromShift = Util.pointFromJSON(ob.getJSONObject("fromShift"));
 		this.toShift = Util.pointFromJSON(ob.getJSONObject("toShift"));
 	}
-
+	@Override
+	public void properties() {
+		if(properties==null)properties = new TransitionProperties(diagram.getProps(),this);
+		properties.load();
+	}
 	@Override
 	public void paint(Graphics2D g2) {
 		g2.setColor(Color.black);
@@ -98,6 +106,18 @@ public class Transition extends Element{
 							   .put("toID", to!=null?to.ID:null)
 							   .put("fromShift", new JSONObject().put("x", fromShift.x).put("y", fromShift.y))
 							   .put("toShift", new JSONObject().put("x", toShift.x).put("y", toShift.y));
+	}
+	public TRANSITION_TYPE getType() {
+		return type;
+	}
+	public void setType(TRANSITION_TYPE type) {
+		this.type = type;
+	}
+	public String getCode() {
+		return code;
+	}
+	public void setCode(String code) {
+		this.code = code;
 	}
 
 }

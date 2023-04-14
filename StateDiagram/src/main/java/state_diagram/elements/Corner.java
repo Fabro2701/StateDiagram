@@ -13,6 +13,8 @@ import org.json.JSONObject;
 import state_diagram.Constants;
 import state_diagram.Diagram;
 import state_diagram.Util;
+import state_diagram.elements.properties.CornerProperties;
+import state_diagram.elements.properties.SimpleStateProperties;
 
 public class Corner extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
@@ -38,6 +40,11 @@ public class Corner extends TransitionableElement {
 		g2.setColor(Constants.SHADOW_COLOR);
 		g2.fillRect(base.x+pos.x-w-shadowMargin, base.y+pos.y-h-shadowMargin, w+2*shadowMargin, h+2*shadowMargin);
 		
+	}
+	@Override
+	public void properties() {
+		if(properties==null)properties = new CornerProperties(diagram.getProps(),this);
+		properties.load();
 	}
 
 	@Override

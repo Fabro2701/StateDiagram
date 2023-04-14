@@ -13,11 +13,17 @@ import org.json.JSONObject;
 import state_diagram.Constants;
 import state_diagram.Diagram;
 import state_diagram.Util;
+import state_diagram.elements.Transition.TRANSITION_TYPE;
+import state_diagram.elements.properties.SimpleStateProperties;
+import state_diagram.elements.properties.SplitterProperties;
 
 public class Splitter extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
 	int w=Constants.SPLITTER_W,h=Constants.SPLITTER_H;
 	static Stroke stroke = new BasicStroke(3);
+	
+	public enum SPLITTER_TYPE{COND,STOCHASTIC}
+	SPLITTER_TYPE type = SPLITTER_TYPE.STOCHASTIC;
 	
 	public Splitter(Diagram diagram, Point base, Point pos) {
 		super(diagram, base, pos);
@@ -42,8 +48,11 @@ public class Splitter extends TransitionableElement {
 			g2.drawString(String.valueOf(father.ID), base.x+pos.x-w, base.y+pos.y-h);
 		}
 		
+	}@Override
+	public void properties() {
+		if(properties==null)properties = new SplitterProperties(diagram.getProps(),this);
+		properties.load();
 	}
-
 	@Override
 	protected void paintShadow(Graphics2D g2) {
 		g2.setColor(Constants.SHADOW_COLOR);

@@ -95,4 +95,10 @@ public abstract class TransitionableElement extends Element{
 	public void setFather(CompoundState father) {
 		this.father = father;
 	}
+	public List<Transition> getFromTs() {
+		return fromTs;
+	}
+	public List<Transition> getToTs() {
+		return toTs;
+	}
 }

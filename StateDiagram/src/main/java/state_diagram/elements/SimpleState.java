@@ -24,14 +24,19 @@ import org.json.JSONObject;
 import state_diagram.Constants;
 import state_diagram.Diagram;
 import state_diagram.Util;
+import state_diagram.elements.properties.SimpleStateProperties;
 
 public class SimpleState extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
 	static Stroke stroke = new BasicStroke(1);
 	int w=Constants.SIMPLE_STATE_W,h=Constants.SIMPLE_STATE_H;
+	int idW,idH;
 	
 	String id;
-	int idW,idH;
+	int rest;
+	String action;
+	boolean continuous;
+	
 	public SimpleState(Diagram diagram, Point base, Point pos) {
 		super(diagram, base, pos);
 		JMenuItem mEdit = new JMenuItem("Edit");
@@ -43,36 +48,23 @@ public class SimpleState extends TransitionableElement {
 	public SimpleState(Diagram diagram, JSONObject ob, List<Element> es) {
 		super(diagram, ob, es);
 		updateId(ob.getString("id"));
-		JMenuItem mEdit = new JMenuItem("Edit");
+		setRest(ob.getInt("rest"));
+		setAction(ob.getString("action"));
+		setContinuous(ob.getBoolean("continuous"));
+		/*JMenuItem mEdit = new JMenuItem("Edit");
 		mEdit.addActionListener(ae->edit());
-		this.pm.add(mEdit);
+		this.pm.add(mEdit);*/
+	}
+	@Override
+	public void properties() {
+		if(properties==null)properties = new SimpleStateProperties(diagram.getProps(),this);
+		properties.load();
 	}
 	public void edit() {
-		JDialog dialog = new JDialog();
-		JPanel panel = new JPanel();
-		dialog.setContentPane(panel);
-		panel.setLayout(new BorderLayout());
-		JPanel proppanel = new JPanel();
-		proppanel.setLayout(new GridLayout(0,2));
 		
-		JLabel idLabel = new JLabel("ID:");
-		JTextField idField = new JTextField(this.id);
-		proppanel.add(idLabel);proppanel.add(idField);
 		
-		JButton saveb = new JButton("save");
-		saveb.addActionListener(a->{
-			updateId(idField.getText());
-			dialog.dispose();
-			diagram.repaint();
-		});
-		
-		panel.add(saveb, BorderLayout.PAGE_END);
-		panel.add(proppanel, BorderLayout.CENTER);
-		dialog.pack();
-		dialog.setLocationRelativeTo(dialog);
-		dialog.setVisible(true);
 	}
-	private void updateId(String id) {
+	public void updateId(String id) {
 		int lastw = idW;
 		this.id=id;
 		Rectangle2D rec = getIdBounds();
@@ -142,7 +134,31 @@ public class SimpleState extends TransitionableElement {
 							   .put("ID", ID)
 							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
 							   .put("id", id)
-							   .put("fatherID", father!=null?father.ID:null);
+							   .put("fatherID", father!=null?father.ID:null)
+							   .put("rest", rest)
+							   .put("action", action)
+							   .put("continuous", continuous);
+	}
+	public String getId() {
+		return id;
+	}
+	public int getRest() {
+		return rest;
+	}
+	public void setRest(int rest) {
+		this.rest = rest;
+	}
+	public String getAction() {
+		return action;
+	}
+	public void setAction(String action) {
+		this.action = action;
+	}
+	public boolean isContinuous() {
+		return continuous;
+	}
+	public void setContinuous(boolean continuous) {
+		this.continuous = continuous;
 	}
 
 

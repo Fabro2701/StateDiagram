@@ -20,6 +20,8 @@ import org.json.JSONObject;
 import state_diagram.Constants;
 import state_diagram.Diagram;
 import state_diagram.Util;
+import state_diagram.elements.properties.CompoundStateProperties;
+import state_diagram.elements.properties.CornerProperties;
 
 public class CompoundState extends TransitionableElement {
 	static int shadowMargin = Constants.SHADOW_MARGIN;
@@ -125,6 +127,11 @@ public class CompoundState extends TransitionableElement {
 		if( ((p.x>=base.x+pos.x-w&&p.x<=base.x+pos.x +exW)&&
 				(p.y>=base.y+pos.y-h&&p.y<=base.y+pos.y +exH)))return this;
 		return null;
+	}
+	@Override
+	public void properties() {
+		if(properties==null)properties = new CompoundStateProperties(diagram.getProps(),this);
+		properties.load();
 	}
 	public enum RESIZE_DIR{
 		HORIZONTAL,VERTICAL
