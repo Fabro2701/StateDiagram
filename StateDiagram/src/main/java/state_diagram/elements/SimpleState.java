@@ -34,7 +34,7 @@ public class SimpleState extends TransitionableElement {
 	
 	String id;
 	int rest;
-	String action;
+	String action="";
 	boolean continuous;
 	
 	public SimpleState(Diagram diagram, Point base, Point pos) {

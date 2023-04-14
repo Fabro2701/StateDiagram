@@ -19,14 +19,19 @@ public class StateProduct extends Product{
 	}
 	@Override
 	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		if(cont<rest) {
+		if(cont>=rest) {
 			FlowController.invoke(state.getId()+"Action"+String.valueOf(state.ID), null);
-			cont++;
+			cont--;
+			if(cont == rest) {
+				if((Boolean)t.execute()) {
+					t.advance();
+				}
+			}
 		}
 		else {
-			cont = 0;
+			cont = rest;
 			if((Boolean)t.execute()) {
-				
+				t.advance();
 			}
 		}
 		return null;

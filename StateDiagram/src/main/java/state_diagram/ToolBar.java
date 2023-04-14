@@ -1,12 +1,10 @@
 package state_diagram;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.awt.Stroke;
 import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -15,15 +13,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import state_diagram.elements.CompoundState;
 import state_diagram.elements.Corner;
 import state_diagram.elements.Element;
+import state_diagram.elements.EndState;
 import state_diagram.elements.InitState;
 import state_diagram.elements.SimpleState;
 import state_diagram.elements.Splitter;
-import state_diagram.elements.Transition;
 import state_diagram.elements.TransitionableElement;
 
 
@@ -51,6 +48,7 @@ public class ToolBar extends JPanel{
 		this.elems.add(new Splitter(null, base, new Point(140,(70+Constants.SPLITTER_H)/2)));
 		this.elems.add(new Corner(null, base, new Point(170,(70+Constants.CORNER_H)/2)));
 		this.elems.add(new CompoundState(null, base, new Point(290,(70+Constants.COMPOUND_STATE_H)/2)));
+		this.elems.add(new EndState(null, base, new Point(320,(70+Constants.SIMPLE_STATE_H)/2)));
 	}
 
 	private class CustomMouse extends MouseAdapter{

@@ -34,7 +34,7 @@ public class FlowController {
 	    Method method = null;
 	    for(Method m:clazz.getDeclaredMethods()) {
 	    	if(m.getName().equals(id)) {
-	    		method = clazz.getMethod(id, String.class);
+	    		method = m;
 	    	}
 	    }
 
@@ -51,8 +51,9 @@ public class FlowController {
 			e.printStackTrace();
 		}
 		FlowController ctrl = new FlowController(); 
-		InitState ini = (InitState)diagram.getElems().get(1);
+		InitState ini = (InitState)diagram.getElems().get(0);
 		ctrl.setCurrent(new InitStateProduct(ctrl, ini));
+		ctrl.step(null);
 		ctrl.step(null);
 	}
 }
