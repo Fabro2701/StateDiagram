@@ -1,6 +1,7 @@
 package state_diagram.product;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 import state_diagram.elements.SimpleState;
 import state_diagram.elements.Transition;
@@ -26,11 +27,11 @@ public class SimpleStateProduct extends Product{
 		cont = rest;
 	}
 	@Override
-	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		//System.out.println("call");
 		if(rest==0) {
 			action();
-			t.execute();
+			t.execute(map);
 		}
 		else {
 			if(cont == rest) {
@@ -44,7 +45,7 @@ public class SimpleStateProduct extends Product{
 			else {
 				if(continuous)action();
 				cont = rest;
-				t.execute();
+				t.execute(map);
 			}
 		}
 

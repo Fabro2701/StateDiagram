@@ -23,6 +23,9 @@ public class Translation {
 		this.elements = elements;
 		this.ts = ts;
 		
+		
+	}
+	public void run() throws FileNotFoundException, UnsupportedEncodingException {
 		StringBuilder sb = new StringBuilder();
 		sb.append("package ").append(pack).append(";\n\n");
 		sb.append("public class Functions {\n");
@@ -34,6 +37,8 @@ public class Translation {
 		PrintWriter writer = new PrintWriter(path+"Functions.java", "UTF-8");
 		writer.println(code);
 		writer.close();
+		
+		System.out.println("FINISHED");
 	}
 	public StringBuilder simpleStates() {
 		StringBuilder sb = new StringBuilder();
@@ -43,8 +48,8 @@ public class Translation {
 				se = (SimpleState)e;
 				sb.append("public static void ").append(se.getId()).append("Action").append(se.ID).append("() {\n");
 				sb.append(se.getAction());
-				sb.append("System.out.println(\"action6\");\n");
-				sb.append("}\n");
+				//sb.append("System.out.println(\"action6\");\n");
+				sb.append("\n}\n");
 			}
 		}
 		return sb;
@@ -52,10 +57,11 @@ public class Translation {
 	public StringBuilder transitionsStates() {
 		StringBuilder sb = new StringBuilder();
 		for(Transition t:ts) {
-			sb.append("public static boolean ").append("transition").append(t.ID).append("() {\n");
+			sb.append("public static boolean ").append("transition").append(t.ID);
+			sb.append("(Test t) {\n");
 			if(t.getType()==TRANSITION_TYPE.TRUE)sb.append("return true;");
 			else sb.append(t.getCode());
-			sb.append("}\n");
+			sb.append("\n}\n");
 			
 		}
 		return sb;
@@ -71,6 +77,7 @@ public class Translation {
 		}
 		try {
 			Translation trs = new Translation(diagram.getElems(),diagram.getTransitions(),"src/main/java/state_diagram/product/","state_diagram.product");
+			trs.run();
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

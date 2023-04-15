@@ -16,9 +16,9 @@ public class FlowController {
 		products = new HashMap<>();
 	}
 	
-	public void step(Object ob) {
+	public void step(Map<String, Object>map) {
 		try {
-			current.execute();
+			current.execute(map);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			// TODO Auto-generated catch block
@@ -64,9 +64,16 @@ public class FlowController {
 		InitState ini = diagram.getInit();
 		ctrl.setCurrent(new InitStateProduct(ctrl, ini));
 		
+		Test test = new Test();
+		test.setAttribute("current", "house");
+		Map<String, Object>map = new HashMap<>();
+		map.put("t", test);
 		for(int i=0;i<3;i++) {
 			//System.out.println("Exec "+i+" :");
-			ctrl.step(null);
+			ctrl.step(map);
 		}
+		test.setAttribute("current", "bar");
+		ctrl.step(map);
+		ctrl.step(map);
 	}
 }

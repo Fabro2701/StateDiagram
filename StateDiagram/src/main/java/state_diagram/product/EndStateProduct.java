@@ -1,6 +1,7 @@
 package state_diagram.product;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 import state_diagram.elements.EndState;
 
@@ -12,7 +13,7 @@ public class EndStateProduct extends Product{
 
 	}
 	@Override
-	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 
 		return null;
 	}

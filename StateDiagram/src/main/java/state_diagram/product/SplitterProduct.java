@@ -3,6 +3,7 @@ package state_diagram.product;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -33,14 +34,14 @@ public class SplitterProduct extends Product{
 		normalize();
 	}
 	@Override
-	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		//stoch type
 		double sum = 0d;
 		double p = rnd.nextDouble();
 		for(int i=0;i<probs.size();i++) {
 			if(probs.get(i)+sum>=p) {
-				ts.get(i).execute();
-				ctrl.step(null);
+				ts.get(i).execute(map);
+				ctrl.step(map);
 				break;
 			}
 			sum += probs.get(i);

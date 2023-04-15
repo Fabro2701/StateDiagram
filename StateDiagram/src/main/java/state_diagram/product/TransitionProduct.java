@@ -1,6 +1,7 @@
 package state_diagram.product;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 import state_diagram.elements.EndState;
 import state_diagram.elements.SimpleState;
@@ -34,9 +35,9 @@ public class TransitionProduct extends Product{
 		
 	}
 	@Override
-	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException,
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		boolean b = (boolean) FlowController.invoke("transition"+t.ID, null);
+		boolean b = (boolean) FlowController.invoke("transition"+t.ID, map.get("t"));
 		if(b) {
 			advance();
 			if(ctrl.getCurrent() instanceof InitStateProduct) {

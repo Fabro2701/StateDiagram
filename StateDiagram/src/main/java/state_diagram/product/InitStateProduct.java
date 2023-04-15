@@ -1,6 +1,7 @@
 package state_diagram.product;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.Map;
 
 import state_diagram.elements.InitState;
 import state_diagram.elements.Transition;
@@ -22,9 +23,9 @@ public class InitStateProduct extends Product{
 		}
 	}
 	@Override
-	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		t.execute();
-		ctrl.step(null);
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		t.execute(map);
+		ctrl.step(map);
 		return null;
 	}
 }

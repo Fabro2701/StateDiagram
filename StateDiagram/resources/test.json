@@ -2,8 +2,8 @@
     "elems": [
         {
             "pos": {
-                "x": 56,
-                "y": 90
+                "x": 66,
+                "y": 139
             },
             "ID": 6,
             "class": "InitState"
@@ -11,86 +11,78 @@
         {
             "rest": 0,
             "pos": {
-                "x": 197,
-                "y": 174
+                "x": 201,
+                "y": 215
             },
             "continuous": false,
-            "action": "",
+            "action": "System.out.println(\"house\");",
             "ID": 19,
-            "id": "id",
+            "id": "house",
             "class": "SimpleState"
         },
         {
             "probs": [
-                1.1,
+                1,
                 1
             ],
             "pos": {
-                "x": 334,
-                "y": 176
+                "x": 398,
+                "y": 222
             },
-            "ID": 33,
+            "ID": 32,
             "type": "STOCHASTIC",
             "class": "Splitter"
         },
         {
             "rest": 0,
             "pos": {
-                "x": 463,
-                "y": 122
+                "x": 541,
+                "y": 124
             },
             "continuous": false,
-            "action": "",
-            "ID": 46,
-            "id": "id2",
+            "action": "System.out.println(\"restaurant\");",
+            "ID": 45,
+            "id": "restaurant",
             "class": "SimpleState"
         },
         {
             "rest": 0,
             "pos": {
-                "x": 451,
-                "y": 279
+                "x": 544,
+                "y": 340
             },
             "continuous": false,
-            "action": "",
-            "ID": 59,
-            "id": "id3",
+            "action": "System.out.println(\"bar\");",
+            "ID": 58,
+            "id": "bar",
             "class": "SimpleState"
-        },
-        {
-            "pos": {
-                "x": 645,
-                "y": 144
-            },
-            "ID": 75,
-            "class": "EndState"
         },
         {
             "toID": 19,
             "code": "",
             "fromShift": {
-                "x": 0,
+                "x": 1,
                 "y": -5
             },
             "toShift": {
-                "x": -20,
-                "y": -21
+                "x": -22,
+                "y": -25
             },
-            "ID": 32,
+            "ID": 71,
             "type": "TRUE",
             "class": "Transition",
             "fromID": 6
         },
         {
-            "toID": 33,
-            "code": "return false;",
+            "toID": 32,
+            "code": "return t.getAttribute(\"current\").equals(\"house\");",
             "fromShift": {
-                "x": 16,
-                "y": -21
+                "x": 40,
+                "y": -18
             },
             "toShift": {
-                "x": -21,
-                "y": -9
+                "x": -18,
+                "y": -7
             },
             "ID": 72,
             "type": "COND",
@@ -98,72 +90,72 @@
             "fromID": 19
         },
         {
-            "toID": 46,
+            "toID": 45,
             "code": "",
             "fromShift": {
-                "x": 0,
+                "x": 1,
                 "y": -10
             },
             "toShift": {
-                "x": -17,
-                "y": -18
+                "x": -20,
+                "y": -6
             },
             "ID": 73,
             "type": "TRUE",
             "class": "Transition",
-            "fromID": 33
+            "fromID": 32
         },
         {
-            "toID": 59,
+            "toID": 58,
             "code": "",
             "fromShift": {
-                "x": -3,
-                "y": -3
+                "x": 0,
+                "y": -8
             },
             "toShift": {
-                "x": -14,
-                "y": -14
+                "x": -19,
+                "y": -35
             },
             "ID": 74,
             "type": "TRUE",
             "class": "Transition",
-            "fromID": 33
+            "fromID": 32
         },
         {
-            "toID": 75,
-            "code": "",
+            "toID": 19,
+            "code": "return t.getAttribute(\"current\").equals(\"restaurant\");",
             "fromShift": {
-                "x": 26,
-                "y": -23
-            },
-            "toShift": {
                 "x": -22,
-                "y": -8
-            },
-            "ID": 88,
-            "type": "TRUE",
-            "class": "Transition",
-            "fromID": 46
-        },
-        {
-            "toID": 75,
-            "code": "",
-            "fromShift": {
-                "x": 25,
-                "y": -16
+                "y": -34
             },
             "toShift": {
-                "x": -10,
-                "y": 2
+                "x": 35,
+                "y": -35
             },
-            "ID": 89,
-            "type": "TRUE",
+            "ID": 75,
+            "type": "COND",
             "class": "Transition",
-            "fromID": 59
+            "fromID": 45
+        },
+        {
+            "toID": 19,
+            "code": "return t.getAttribute(\"current\").equals(\"bar\");",
+            "fromShift": {
+                "x": -21,
+                "y": -4
+            },
+            "toShift": {
+                "x": 29,
+                "y": 1
+            },
+            "ID": 76,
+            "type": "COND",
+            "class": "Transition",
+            "fromID": 58
         }
     ],
     "base": {
         "x": 0,
-        "y": 0
+        "y": -1
     }
 }
