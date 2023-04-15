@@ -18,7 +18,7 @@ public class Transition extends Element{
 	
 	public enum TRANSITION_TYPE{TRUE,COND,STOCHASTIC}
 	TRANSITION_TYPE type = TRANSITION_TYPE.TRUE;
-	String code;
+	String code="";
 	
 	public Transition(Diagram diagram, TransitionableElement from, Point fromShift, TransitionableElement to) {
 		super(diagram);
@@ -37,6 +37,8 @@ public class Transition extends Element{
 		this.to = (TransitionableElement) es.stream().filter(e->e instanceof TransitionableElement && ((TransitionableElement)e).ID==ob.getInt("toID")).findFirst().get();
 		this.fromShift = Util.pointFromJSON(ob.getJSONObject("fromShift"));
 		this.toShift = Util.pointFromJSON(ob.getJSONObject("toShift"));
+		this.code = ob.getString("code");
+		this.type = ob.getEnum(TRANSITION_TYPE.class, "type");
 	}
 	@Override
 	public void properties() {
@@ -66,9 +68,19 @@ public class Transition extends Element{
 		to.addToTransition(this);
 	}
 	@Override
-	public TransitionableElement contains(Point p) {
-		// TODO Auto-generated method stub
-		return null;
+	public TransitionableElement contains(Point p) {return null;}
+	
+	public boolean containsLine(Point p) {
+		Point fromp = new Point(fromShift.x + from.base.x + from.pos.x,
+				fromShift.y + from.base.y + from.pos.y);
+		Point top = new Point(toShift.x + to.base.x + to.pos.x,
+			  toShift.y + to.base.y + to.pos.y);
+		
+       
+        double k = 1.5;
+        double d = Util.distance(p, fromp, top);
+
+		return (d <= k ? true:false);
 	}
 	public void setDest(TransitionableElement to) {
 		this.to = to;
@@ -111,7 +123,8 @@ public class Transition extends Element{
 							   .put("toID", to!=null?to.ID:null)
 							   .put("fromShift", new JSONObject().put("x", fromShift.x).put("y", fromShift.y))
 							   .put("toShift", new JSONObject().put("x", toShift.x).put("y", toShift.y))
-							   .put("type", type);
+							   .put("type", type)
+							   .put("code", code);
 	}
 	public TRANSITION_TYPE getType() {
 		return type;

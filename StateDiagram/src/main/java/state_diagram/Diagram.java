@@ -95,8 +95,8 @@ public class Diagram extends JPanel{
 		    		}
 		    	}
 				for(var t:ts) {
-		    		if((aux=t.contains(p))!=null) {
-		    			aux.properties();
+		    		if(t.containsLine(p)) {
+		    			t.properties();
 		    			break;
 		    		}
 		    	}
@@ -421,5 +421,8 @@ public class Diagram extends JPanel{
 	}
 	public InitState getInit() {
 		return (InitState) elems.stream().filter(e->e instanceof InitState).findAny().get();
+	}
+	public List<Transition> getTransitions() {
+		return ts;
 	}
 }

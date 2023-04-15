@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+
 import state_diagram.elements.Splitter;
 import state_diagram.elements.Transition;
 
@@ -12,6 +13,7 @@ public class SplitterProduct extends Product{
 	Splitter state;
 	List<TransitionProduct> ts;
 	List<Double> probs;
+
 	Random rnd = new Random();
 	public SplitterProduct(FlowController ctrl, Splitter state) {
 		super(ctrl);
@@ -38,6 +40,7 @@ public class SplitterProduct extends Product{
 		for(int i=0;i<probs.size();i++) {
 			if(probs.get(i)+sum>=p) {
 				ts.get(i).execute();
+				ctrl.step(null);
 				break;
 			}
 			sum += probs.get(i);

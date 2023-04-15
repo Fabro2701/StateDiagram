@@ -67,6 +67,7 @@
         },
         {
             "toID": 19,
+            "code": "",
             "fromShift": {
                 "x": 0,
                 "y": -5
@@ -76,11 +77,13 @@
                 "y": -21
             },
             "ID": 32,
+            "type": "TRUE",
             "class": "Transition",
             "fromID": 6
         },
         {
             "toID": 33,
+            "code": "return false;",
             "fromShift": {
                 "x": 16,
                 "y": -21
@@ -90,11 +93,13 @@
                 "y": -9
             },
             "ID": 72,
+            "type": "COND",
             "class": "Transition",
             "fromID": 19
         },
         {
             "toID": 46,
+            "code": "",
             "fromShift": {
                 "x": 0,
                 "y": -10
@@ -104,11 +109,13 @@
                 "y": -18
             },
             "ID": 73,
+            "type": "TRUE",
             "class": "Transition",
             "fromID": 33
         },
         {
             "toID": 59,
+            "code": "",
             "fromShift": {
                 "x": -3,
                 "y": -3
@@ -118,11 +125,13 @@
                 "y": -14
             },
             "ID": 74,
+            "type": "TRUE",
             "class": "Transition",
             "fromID": 33
         },
         {
             "toID": 75,
+            "code": "",
             "fromShift": {
                 "x": 26,
                 "y": -23
@@ -132,11 +141,13 @@
                 "y": -8
             },
             "ID": 88,
+            "type": "TRUE",
             "class": "Transition",
             "fromID": 46
         },
         {
             "toID": 75,
+            "code": "",
             "fromShift": {
                 "x": 25,
                 "y": -16
@@ -146,6 +157,7 @@
                 "y": 2
             },
             "ID": 89,
+            "type": "TRUE",
             "class": "Transition",
             "fromID": 59
         }

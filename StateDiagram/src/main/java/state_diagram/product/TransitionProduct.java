@@ -36,11 +36,14 @@ public class TransitionProduct extends Product{
 	@Override
 	public Object execute() throws NoSuchMethodException, SecurityException, IllegalAccessException,
 			IllegalArgumentException, InvocationTargetException {
-		//System.out.println(""+t.ID);
-		advance();
-		if(ctrl.getCurrent() instanceof InitStateProduct) {
-			ctrl.step(null);
+		boolean b = (boolean) FlowController.invoke("transition"+t.ID, null);
+		if(b) {
+			advance();
+			if(ctrl.getCurrent() instanceof InitStateProduct) {
+				ctrl.step(null);
+			}
 		}
+		
 		return null;
 	}
 	public void advance() {

@@ -9,18 +9,26 @@ import java.util.List;
 import state_diagram.Diagram;
 import state_diagram.elements.Element;
 import state_diagram.elements.SimpleState;
+import state_diagram.elements.Transition;
 import state_diagram.elements.TransitionableElement;
+import state_diagram.elements.Transition.TRANSITION_TYPE;
 
 public class Translation {
 	String path, pack;
 	List<TransitionableElement>elements;
-	public Translation(List<TransitionableElement>elements, String path, String pack) throws FileNotFoundException, UnsupportedEncodingException {
+	List<Transition>ts;
+	public Translation(List<TransitionableElement>elements, List<Transition>ts, String path, String pack) throws FileNotFoundException, UnsupportedEncodingException {
 		this.path = path;
 		this.pack = pack;
 		this.elements = elements;
+		this.ts = ts;
 		
 		StringBuilder sb = new StringBuilder();
+		sb.append("package ").append(pack).append(";\n\n");
+		sb.append("public class Functions {\n");
 		sb.append(simpleStates());
+		sb.append(transitionsStates());
+		sb.append("}");
 		
 		String code = sb.toString();
 		PrintWriter writer = new PrintWriter(path+"Functions.java", "UTF-8");
@@ -29,10 +37,6 @@ public class Translation {
 	}
 	public StringBuilder simpleStates() {
 		StringBuilder sb = new StringBuilder();
-		
-		sb.append("package ").append(pack).append(";\n\n");
-		sb.append("public class Functions {\n");
-		
 		SimpleState se = null;
 		for(Element e:elements) {
 			if(e instanceof SimpleState) {
@@ -43,9 +47,17 @@ public class Translation {
 				sb.append("}\n");
 			}
 		}
-		
-		sb.append("}");
-		
+		return sb;
+	}
+	public StringBuilder transitionsStates() {
+		StringBuilder sb = new StringBuilder();
+		for(Transition t:ts) {
+			sb.append("public static boolean ").append("transition").append(t.ID).append("() {\n");
+			if(t.getType()==TRANSITION_TYPE.TRUE)sb.append("return true;");
+			else sb.append(t.getCode());
+			sb.append("}\n");
+			
+		}
 		return sb;
 	}
 	public static void main(String args[]) {
@@ -58,7 +70,7 @@ public class Translation {
 			e.printStackTrace();
 		}
 		try {
-			Translation trs = new Translation(diagram.getElems(),"src/main/java/state_diagram/product/","state_diagram.product");
+			Translation trs = new Translation(diagram.getElems(),diagram.getTransitions(),"src/main/java/state_diagram/product/","state_diagram.product");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -59,8 +59,12 @@ public class Splitter extends TransitionableElement {
 			g2.drawString(String.valueOf(father.ID), base.x+pos.x-w, base.y+pos.y-h);
 		}
 		
-	}@Override
+	}
+	@Override
 	public void properties() {
+		revalidate();
+	}
+	public void revalidate() {
 		properties = new SplitterProperties(diagram.getProps(),this);
 		properties.load();
 	}
@@ -109,6 +113,12 @@ public class Splitter extends TransitionableElement {
 	}
 	public List<Double> getProbs() {
 		return probs;
+	}
+	public SPLITTER_TYPE getType() {
+		return type;
+	}
+	public void setType(SPLITTER_TYPE type) {
+		this.type = type;
 	}
 
 
