@@ -5,17 +5,17 @@ import java.lang.reflect.InvocationTargetException;
 import state_diagram.elements.SimpleState;
 import state_diagram.elements.Transition;
 
-public class StateProduct extends Product{
+public class SimpleStateProduct extends Product{
 	SimpleState state;
 	int rest,cont;
 	boolean continuous;
 	TransitionProduct t;
-	public StateProduct(FlowController ctrl, SimpleState state) {
+	public SimpleStateProduct(FlowController ctrl, SimpleState state) {
 		super(ctrl);
 		ctrl.products.put(state, this);
 		
 		this.state = state;
-		this.rest = 2;
+		this.rest = 0;
 		this.continuous = state.isContinuous();
 		
 		Transition te = state.getFromTs().get(0);

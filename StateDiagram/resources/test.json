@@ -1,52 +1,153 @@
 {
     "elems": [
         {
+            "pos": {
+                "x": 56,
+                "y": 90
+            },
+            "ID": 6,
+            "class": "InitState"
+        },
+        {
             "rest": 0,
             "pos": {
-                "x": 227,
-                "y": 98
+                "x": 197,
+                "y": 174
             },
             "continuous": false,
             "action": "",
-            "ID": 6,
+            "ID": 19,
             "id": "id",
-            "type": "SimpleState"
+            "class": "SimpleState"
+        },
+        {
+            "probs": [
+                1.1,
+                1
+            ],
+            "pos": {
+                "x": 334,
+                "y": 176
+            },
+            "ID": 33,
+            "type": "STOCHASTIC",
+            "class": "Splitter"
+        },
+        {
+            "rest": 0,
+            "pos": {
+                "x": 463,
+                "y": 122
+            },
+            "continuous": false,
+            "action": "",
+            "ID": 46,
+            "id": "id2",
+            "class": "SimpleState"
+        },
+        {
+            "rest": 0,
+            "pos": {
+                "x": 451,
+                "y": 279
+            },
+            "continuous": false,
+            "action": "",
+            "ID": 59,
+            "id": "id3",
+            "class": "SimpleState"
         },
         {
             "pos": {
-                "x": 91,
-                "y": 74
+                "x": 645,
+                "y": 144
             },
-            "ID": 19,
-            "type": "InitState"
-        },
-        {
-            "toID": 6,
-            "fromShift": {
-                "x": 2,
-                "y": -7
-            },
-            "toShift": {
-                "x": -22,
-                "y": -25
-            },
-            "ID": 32,
-            "type": "Transition",
-            "fromID": 19
+            "ID": 75,
+            "class": "EndState"
         },
         {
             "toID": 19,
             "fromShift": {
-                "x": -22,
-                "y": -2
+                "x": 0,
+                "y": -5
             },
             "toShift": {
-                "x": -5,
-                "y": 1
+                "x": -20,
+                "y": -21
             },
-            "ID": 33,
-            "type": "Transition",
+            "ID": 32,
+            "class": "Transition",
             "fromID": 6
+        },
+        {
+            "toID": 33,
+            "fromShift": {
+                "x": 16,
+                "y": -21
+            },
+            "toShift": {
+                "x": -21,
+                "y": -9
+            },
+            "ID": 72,
+            "class": "Transition",
+            "fromID": 19
+        },
+        {
+            "toID": 46,
+            "fromShift": {
+                "x": 0,
+                "y": -10
+            },
+            "toShift": {
+                "x": -17,
+                "y": -18
+            },
+            "ID": 73,
+            "class": "Transition",
+            "fromID": 33
+        },
+        {
+            "toID": 59,
+            "fromShift": {
+                "x": -3,
+                "y": -3
+            },
+            "toShift": {
+                "x": -14,
+                "y": -14
+            },
+            "ID": 74,
+            "class": "Transition",
+            "fromID": 33
+        },
+        {
+            "toID": 75,
+            "fromShift": {
+                "x": 26,
+                "y": -23
+            },
+            "toShift": {
+                "x": -22,
+                "y": -8
+            },
+            "ID": 88,
+            "class": "Transition",
+            "fromID": 46
+        },
+        {
+            "toID": 75,
+            "fromShift": {
+                "x": 25,
+                "y": -16
+            },
+            "toShift": {
+                "x": -10,
+                "y": 2
+            },
+            "ID": 89,
+            "class": "Transition",
+            "fromID": 59
         }
     ],
     "base": {

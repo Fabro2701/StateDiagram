@@ -65,7 +65,7 @@ public class Corner extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		return new JSONObject().put("type", "Corner")
+		return new JSONObject().put("class", "Corner")
 							   .put("ID", ID)
 							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
 							   .put("fatherID", father!=null?father.ID:null);

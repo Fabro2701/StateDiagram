@@ -31,6 +31,8 @@ public class Transition extends Element{
 	}
 	public Transition(Diagram diagram, JSONObject ob, List<Element> es) {
 		super(diagram, false);
+		this.ID = ob.getInt("ID");
+		IdGenerator.update(ID);
 		this.from = (TransitionableElement) es.stream().filter(e->e instanceof TransitionableElement && ((TransitionableElement)e).ID==ob.getInt("fromID")).findFirst().get();
 		this.to = (TransitionableElement) es.stream().filter(e->e instanceof TransitionableElement && ((TransitionableElement)e).ID==ob.getInt("toID")).findFirst().get();
 		this.fromShift = Util.pointFromJSON(ob.getJSONObject("fromShift"));
@@ -52,6 +54,9 @@ public class Transition extends Element{
 		
 
 		g2.drawLine(fromp.x, fromp.y, top.x, top.y);
+		
+		Point mid = new Point(top.x-fromp.x, top.y-fromp.y);
+		g2.drawString(String.valueOf(ID), fromp.x+mid.x/2, fromp.y+mid.y/2);
 		
 		if(to instanceof Corner)return;
 		drawArrow(g2, fromp.x, fromp.y, top.x, top.y,Constants.ARROW_W,Constants.ARROW_H);
@@ -100,12 +105,13 @@ public class Transition extends Element{
 	}
 	@Override
 	public JSONObject toJSON() {
-		return new JSONObject().put("type", "Transition")
+		return new JSONObject().put("class", "Transition")
 							   .put("ID", ID)
 							   .put("fromID", from!=null?from.ID:null)
 							   .put("toID", to!=null?to.ID:null)
 							   .put("fromShift", new JSONObject().put("x", fromShift.x).put("y", fromShift.y))
-							   .put("toShift", new JSONObject().put("x", toShift.x).put("y", toShift.y));
+							   .put("toShift", new JSONObject().put("x", toShift.x).put("y", toShift.y))
+							   .put("type", type);
 	}
 	public TRANSITION_TYPE getType() {
 		return type;

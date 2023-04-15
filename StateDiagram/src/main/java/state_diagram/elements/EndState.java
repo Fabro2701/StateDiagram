@@ -76,7 +76,7 @@ public class EndState extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		return new JSONObject().put("type", "EndState")
+		return new JSONObject().put("class", "EndState")
 							   .put("ID", ID)
 							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
 							   .put("fatherID", father!=null?father.ID:null);

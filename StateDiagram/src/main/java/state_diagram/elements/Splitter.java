@@ -8,13 +8,11 @@ import java.awt.Stroke;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import state_diagram.Constants;
 import state_diagram.Diagram;
-import state_diagram.Util;
-import state_diagram.elements.Transition.TRANSITION_TYPE;
-import state_diagram.elements.properties.SimpleStateProperties;
 import state_diagram.elements.properties.SplitterProperties;
 
 public class Splitter extends TransitionableElement {
@@ -24,13 +22,26 @@ public class Splitter extends TransitionableElement {
 	
 	public enum SPLITTER_TYPE{COND,STOCHASTIC}
 	SPLITTER_TYPE type = SPLITTER_TYPE.STOCHASTIC;
+	List<Double>probs;
 	
 	public Splitter(Diagram diagram, Point base, Point pos) {
 		super(diagram, base, pos);
+		probs = new ArrayList<>();
 	}
 	public Splitter(Diagram diagram, JSONObject ob, List<Element> es) {
 		super(diagram, ob, es);
+		probs = new ArrayList<>();
+		JSONArray ps = ob.getJSONArray("probs");
+		for(int i=0;i<ps.length();i++){
+			probs.add(ps.getDouble(i));
+		}
 	}
+	@Override
+	public void addFromTransition(Transition t) {
+		fromTs.add(t);
+		if(probs.size()<fromTs.size())probs.add(1d);
+	}
+
 	
 	@Override
 	public void paint(Graphics2D g2) {
@@ -50,7 +61,7 @@ public class Splitter extends TransitionableElement {
 		
 	}@Override
 	public void properties() {
-		if(properties==null)properties = new SplitterProperties(diagram.getProps(),this);
+		properties = new SplitterProperties(diagram.getProps(),this);
 		properties.load();
 	}
 	@Override
@@ -88,11 +99,16 @@ public class Splitter extends TransitionableElement {
 	@Override
 	public JSONObject toJSON() {
 		
-		return new JSONObject().put("type", "Splitter")
+		return new JSONObject().put("class", "Splitter")
 								   .put("ID", ID)
 								   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
-								   .put("fatherID", father!=null?father.ID:null);
+								   .put("fatherID", father!=null?father.ID:null)
+								   .put("type", type)
+								   .put("probs", new JSONArray(this.probs));
 		
+	}
+	public List<Double> getProbs() {
+		return probs;
 	}
 
 

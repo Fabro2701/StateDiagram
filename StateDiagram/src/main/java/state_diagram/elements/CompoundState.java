@@ -182,7 +182,7 @@ public class CompoundState extends TransitionableElement {
 
 	@Override
 	public JSONObject toJSON() {
-		return new JSONObject().put("type", "CompoundState")
+		return new JSONObject().put("class", "CompoundState")
 				   			   .put("ID", ID)
 				   			   .put("id", id)
 							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))

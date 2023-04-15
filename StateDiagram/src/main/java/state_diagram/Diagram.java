@@ -388,7 +388,7 @@ public class Diagram extends JPanel{
 		List<Element>tmpElements = new ArrayList<>();
 		for(int i=0;i<arr.length();i++) {
 			JSONObject o = arr.getJSONObject(i);
-			String type = o.getString("type");
+			String type = o.getString("class");
 			
 			Element e = (Element) Class.forName("state_diagram.elements."+type).getConstructor(Diagram.class,JSONObject.class,List.class).newInstance(this,o,tmpElements);
 			tmpElements.add(e);

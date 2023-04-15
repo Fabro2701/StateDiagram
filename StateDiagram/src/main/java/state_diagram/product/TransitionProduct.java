@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import state_diagram.elements.EndState;
 import state_diagram.elements.SimpleState;
+import state_diagram.elements.Splitter;
 import state_diagram.elements.Transition;
 import state_diagram.elements.TransitionableElement;
 
@@ -21,10 +22,13 @@ public class TransitionProduct extends Product{
 		}
 		else {
 			if(sto instanceof SimpleState) {
-				this.to = new StateProduct(ctrl, (SimpleState) sto);
+				this.to = new SimpleStateProduct(ctrl, (SimpleState) sto);
 			}
-			if(sto instanceof EndState) {
+			else if(sto instanceof EndState) {
 				this.to = new EndStateProduct(ctrl, (EndState) sto);
+			}
+			else if(sto instanceof Splitter) {
+				this.to = new SplitterProduct(ctrl, (Splitter) sto);
 			}
 		}
 		
@@ -35,7 +39,7 @@ public class TransitionProduct extends Product{
 		//System.out.println(""+t.ID);
 		advance();
 		if(ctrl.getCurrent() instanceof InitStateProduct) {
-			ctrl.step(t);
+			ctrl.step(null);
 		}
 		return null;
 	}

@@ -130,7 +130,7 @@ public class SimpleState extends TransitionableElement {
 	}
 	@Override
 	public JSONObject toJSON() {
-		return new JSONObject().put("type", "SimpleState")
+		return new JSONObject().put("class", "SimpleState")
 							   .put("ID", ID)
 							   .put("pos", new JSONObject().put("x", pos.x).put("y", pos.y))
 							   .put("id", id)
