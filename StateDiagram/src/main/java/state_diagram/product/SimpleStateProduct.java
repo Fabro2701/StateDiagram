@@ -2,7 +2,10 @@ package state_diagram.product;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+import state_diagram.Util;
 import state_diagram.elements.SimpleState;
 import state_diagram.elements.Transition;
 
@@ -11,6 +14,8 @@ public class SimpleStateProduct extends Product{
 	int rest,cont;
 	boolean continuous;
 	TransitionProduct t;
+	private String params="";
+	static Pattern p = Pattern.compile("^\\([^\\(]*\\)");
 	public SimpleStateProduct(FlowController ctrl, SimpleState state) {
 		super(ctrl);
 		ctrl.products.put(state, this);
@@ -25,25 +30,28 @@ public class SimpleStateProduct extends Product{
 		}
 		this.t = new TransitionProduct(ctrl, state.getFromTs().get(0));
 		cont = rest;
+
+		Matcher m = p.matcher(state.getAction());
+		if(m.find()) this.params = m.group();
 	}
 	@Override
-	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
 		//System.out.println("call");
 		if(rest==0) {
-			action();
+			action(map);
 			t.execute(map);
 		}
 		else {
 			if(cont == rest) {
-				action();
+				action(map);
 				cont --;
 			}
 			else if(cont >= 0) {
-				if(continuous)action();
+				if(continuous)action(map);
 				cont --;
 			}
 			else {
-				if(continuous)action();
+				if(continuous)action(map);
 				cont = rest;
 				t.execute(map);
 			}
@@ -51,7 +59,7 @@ public class SimpleStateProduct extends Product{
 
 		return null;
 	}
-	public void action() throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		FlowController.invoke(state.getId()+"Action"+String.valueOf(state.ID), null);
+	public void action(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+		ctrl.invoke(state.getId()+"Action"+String.valueOf(state.ID), Util.extractParams(map,params));
 	}
 }

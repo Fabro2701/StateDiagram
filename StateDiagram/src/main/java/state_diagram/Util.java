@@ -1,6 +1,9 @@
 package state_diagram;
 
 import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.json.JSONObject;
 
@@ -20,5 +23,15 @@ public class Util {
     public static double length(double x, double y) {
         return Math.sqrt(x * x + y * y);
     }
-
+    public static Object[] extractParams(Map<String,Object>map, String paramsString) {
+    	List<Object>l = new ArrayList<>();
+    	if(paramsString.length()>0) {
+    		String[] params = paramsString.substring(1, paramsString.length()-1).split(",");
+        	for(String param:params) {
+        		l.add(map.get(param.substring(param.indexOf(' ')+1)));
+        	}
+    	}
+    	
+        return l.toArray();
+    }
 }

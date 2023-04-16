@@ -34,7 +34,7 @@ public class SplitterProduct extends Product{
 		normalize();
 	}
 	@Override
-	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
 		//stoch type
 		double sum = 0d;
 		double p = rnd.nextDouble();

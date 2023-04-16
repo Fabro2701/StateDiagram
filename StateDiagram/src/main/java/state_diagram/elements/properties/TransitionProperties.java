@@ -7,15 +7,14 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
-import state_diagram.elements.SimpleState;
 import state_diagram.elements.Transition;
 import state_diagram.elements.Transition.TRANSITION_TYPE;
 
 public class TransitionProperties extends ElementProperties {
 	Transition e;
-	JTextField codeField;
+	JTextArea  codeField;
 	public TransitionProperties(JScrollPane father, Transition e) {
 		super(father);
 		this.e = e;
@@ -25,7 +24,7 @@ public class TransitionProperties extends ElementProperties {
 		proppanel.setLayout(new GridLayout(0,2));
 		
 		JLabel codeLabel = new JLabel("Code:");
-		codeField = new JTextField(e.getCode());
+		codeField = new JTextArea(e.getCode());
 		proppanel.add(codeLabel);proppanel.add(codeField);
 		
 		

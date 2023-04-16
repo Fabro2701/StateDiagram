@@ -12,15 +12,17 @@ import state_diagram.elements.InitState;
 public class FlowController {
 	Product current;
 	Map<Element,Product>products;
-	public FlowController() {
+	String fsm;
+	public FlowController(String fsm) {
 		products = new HashMap<>();
+		this.fsm = fsm;
 	}
 	
 	public void step(Map<String, Object>map) {
 		try {
 			current.execute(map);
 		} catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
+				| InvocationTargetException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -33,8 +35,8 @@ public class FlowController {
 		this.current = current;
 	}
 	
-	public static Object invoke(String id, Object... params) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
-		Class<Functions> clazz = Functions.class;
+	public Object invoke(String id, Object... params) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
+		Class<?> clazz = Class.forName("state_diagram.product.Functions"+fsm);
 		
 	    Method method = null;
 	    for(Method m:clazz.getDeclaredMethods()) {
@@ -60,7 +62,7 @@ public class FlowController {
 			e.printStackTrace();
 		}
 		
-		FlowController ctrl = new FlowController(); 
+		FlowController ctrl = new FlowController(diagram.getFsmID()); 
 		InitState ini = diagram.getInit();
 		ctrl.setCurrent(new InitStateProduct(ctrl, ini));
 		

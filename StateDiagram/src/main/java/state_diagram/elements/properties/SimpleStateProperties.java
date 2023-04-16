@@ -1,20 +1,21 @@
 package state_diagram.elements.properties;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import state_diagram.elements.SimpleState;
 
 public class SimpleStateProperties extends ElementProperties {
 	SimpleState e;
-	JTextField idField,restField,actionField,continuousField;
+	JTextField idField,restField,continuousField;
+	JTextArea actionField;
 	public SimpleStateProperties(JScrollPane father, SimpleState e) {
 		super(father);
 		this.e = e;
@@ -36,7 +37,7 @@ public class SimpleStateProperties extends ElementProperties {
 		proppanel.add(continuousLabel);proppanel.add(continuousField);
 		
 		JLabel actionLabel = new JLabel("Action:");
-		actionField = new JTextField(e.getAction());
+		actionField = new JTextArea(e.getAction());
 		proppanel.add(actionLabel);proppanel.add(actionField);
 		
 		

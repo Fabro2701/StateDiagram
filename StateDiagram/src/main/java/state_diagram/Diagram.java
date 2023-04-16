@@ -48,6 +48,7 @@ public class Diagram extends JPanel{
 	MouseAdapter mouse;
 	Consumer<Graphics2D>gaux;
 	private JScrollPane props;
+	String fsmID="";
 	public Diagram() {
 		this.base = new Point(0,0);
 		this.elems = new ArrayList<>();
@@ -424,5 +425,8 @@ public class Diagram extends JPanel{
 	}
 	public List<Transition> getTransitions() {
 		return ts;
+	}
+	public String getFsmID() {
+		return fsmID;
 	}
 }

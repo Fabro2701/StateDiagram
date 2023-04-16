@@ -23,7 +23,7 @@ public class InitStateProduct extends Product{
 		}
 	}
 	@Override
-	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public Object execute(Map<String, Object>map) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, ClassNotFoundException {
 		t.execute(map);
 		ctrl.step(map);
 		return null;

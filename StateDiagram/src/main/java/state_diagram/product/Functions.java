@@ -4,22 +4,22 @@ public class Functions {
 public static void houseAction19() {
 System.out.println("house");
 }
-public static void restaurantAction45() {
-System.out.println("restaurant");
+public static void restaurantAction45(Test t) {
+t.setAttribute("current","restaurant");System.out.println("restaurant");
 }
 public static void barAction58() {
 System.out.println("bar");
 }
-public static boolean transition71(Test t) {
+public static boolean transition71() {
 return true;
 }
 public static boolean transition72(Test t) {
 return t.getAttribute("current").equals("house");
 }
-public static boolean transition73(Test t) {
+public static boolean transition73() {
 return true;
 }
-public static boolean transition74(Test t) {
+public static boolean transition74() {
 return true;
 }
 public static boolean transition75(Test t) {
