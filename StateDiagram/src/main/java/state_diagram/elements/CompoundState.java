@@ -144,19 +144,19 @@ public class CompoundState extends TransitionableElement {
 	public void increaseWidth(int i) {
 		this.exW += i;
 		for(var t:this.fromTs) {
-			t.fromShift.x += i;
+			if(t.fromShift.x>0)t.fromShift.x += i;
 		}
 		for(var t:this.toTs) {
-			t.toShift.x += i;
+			if(t.fromShift.x>0)t.toShift.x += i;
 		}
 	}
 	public void increaseHeight(int i) {
 		this.exH += i;
 		for(var t:this.fromTs) {
-			t.fromShift.y += i;
+			if(t.fromShift.y>0)t.fromShift.y += i;
 		}
 		for(var t:this.toTs) {
-			t.toShift.y += i;
+			if(t.fromShift.y>0)t.toShift.y += i;
 		}
 	}
 	private void updateId(String id) {
@@ -167,10 +167,10 @@ public class CompoundState extends TransitionableElement {
 		this.idH = (int) rec.getHeight();
 		
 		for(var t:this.fromTs) {
-			t.fromShift.x += idW-lastw;
+			if(t.fromShift.x>0)t.fromShift.x += idW-lastw;
 		}
 		for(var t:this.toTs) {
-			t.toShift.x += idW-lastw;
+			if(t.fromShift.x>0)t.toShift.x += idW-lastw;
 		}
 		
 	}

@@ -31,6 +31,10 @@ public class EndState extends TransitionableElement {
 		super.paint(g2);
 		g2.setColor(Constants.INIT_COLOR);
 		g2.fillOval(base.x+pos.x-w, base.y+pos.y-h, w, h);
+		g2.setColor(Color.white);
+		g2.fillOval(base.x+pos.x-w+3, base.y+pos.y-h+3, w-6, h-6);
+		g2.setColor(Constants.INIT_COLOR);
+		g2.fillOval(base.x+pos.x-w+5, base.y+pos.y-h+5, w-10, h-10);
 		/*g2.setColor(Constants.SIMPLE_STATE_COLOR);
 		g2.drawOval(base.x+pos.x-w, base.y+pos.y-h, w, h);*/
 		if(father!=null) {

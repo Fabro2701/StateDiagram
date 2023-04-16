@@ -72,10 +72,10 @@ public class SimpleState extends TransitionableElement {
 		this.idH = (int) rec.getHeight();
 		
 		for(var t:this.fromTs) {
-			t.fromShift.x += idW-lastw;
+			if(t.fromShift.x>0)t.fromShift.x += idW-lastw;
 		}
 		for(var t:this.toTs) {
-			t.toShift.x += idW-lastw;
+			if(t.fromShift.x>0)t.toShift.x += idW-lastw;
 		}
 	}
 	private Rectangle2D getIdBounds() {
