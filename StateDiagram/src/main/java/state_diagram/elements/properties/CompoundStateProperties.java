@@ -17,5 +17,9 @@ public class CompoundStateProperties extends ElementProperties {
 	protected void _load() {
 		
 	}
+	@Override
+	protected void save() {
+	
+	}
 
 }

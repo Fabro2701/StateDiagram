@@ -21,5 +21,9 @@ public class InitStateProperties extends ElementProperties {
 	@Override
 	protected void _load() {
 	}
+	@Override
+	protected void save() {
+	
+	}
 
 }

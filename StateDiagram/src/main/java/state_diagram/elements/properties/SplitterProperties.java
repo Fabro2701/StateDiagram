@@ -85,12 +85,6 @@ public class SplitterProperties extends ElementProperties {
 	}
 
 
-	private void save() {
-		for(int i=0;i<e.getFromTs().size();i++) {
-			e.getProbs().set(i, Double.valueOf(this.tFields.get(i).getText()));
-		}
-		
-	}
 	private void condPanel() {
 		proppanel = new JPanel();
 	}
@@ -107,7 +101,12 @@ public class SplitterProperties extends ElementProperties {
 			i++;
 		}
 	}
-
+	@Override
+	protected void save() {
+		for(int i=0;i<e.getFromTs().size();i++) {
+			e.getProbs().set(i, Double.valueOf(this.tFields.get(i).getText()));
+		}
+	}
 	@Override
 	protected void _load() {
 		

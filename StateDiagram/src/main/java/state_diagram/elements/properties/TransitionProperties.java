@@ -38,8 +38,8 @@ public class TransitionProperties extends ElementProperties {
 		this.add(proppanel, BorderLayout.PAGE_START);
 		this.add(saveb, BorderLayout.PAGE_END);
 	}
-
-	private void save() {
+	@Override
+	protected void save() {
 		e.setType(codeField.getText().equals("")?TRANSITION_TYPE.TRUE:TRANSITION_TYPE.COND);
 		e.setCode(codeField.getText());
 	}

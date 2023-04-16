@@ -43,11 +43,7 @@ public class SimpleStateProperties extends ElementProperties {
 		
 		JButton saveb = new JButton("save");
 		saveb.addActionListener(a->{
-			e.updateId(idField.getText());
-			e.setRest(Integer.valueOf(restField.getText()));
-			e.setContinuous(Boolean.valueOf(actionField.getText()));
-			e.setAction(actionField.getText());
-			e.getDiagram().repaint();
+			save();
 		});
 
 		this.add(proppanel, BorderLayout.PAGE_START);
@@ -60,6 +56,15 @@ public class SimpleStateProperties extends ElementProperties {
 		restField.setText(String.valueOf(e.getRest()));
 		continuousField.setText(String.valueOf(e.isContinuous()));
 		actionField.setText(e.getAction());
+	}
+
+	@Override
+	protected void save() {
+		e.updateId(idField.getText());
+		e.setRest(Integer.valueOf(restField.getText()));
+		e.setContinuous(Boolean.valueOf(actionField.getText()));
+		e.setAction(actionField.getText());
+		e.getDiagram().repaint();
 	}
 
 }
